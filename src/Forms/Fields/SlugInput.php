@@ -43,7 +43,7 @@ class SlugInput extends TextInput
         return $this;
     }
 
-    public function getSlugInputUrlVisitLinkVisible(): ?string
+    public function getSlugInputUrlVisitLinkVisible(): ?bool
     {
         return $this->evaluate($this->slugInputUrlVisitLinkVisible);
     }
@@ -109,7 +109,7 @@ class SlugInput extends TextInput
         return $this;
     }
 
-    public function getReadOnly(): string
+    public function getReadOnly(): bool
     {
         return $this->evaluate($this->readOnly);
     }
