@@ -114,10 +114,6 @@ class TitleWithSlugInput
             $textInput->unique(...$titleRuleUniqueParameters);
         }
 
-        if ($titleIsTranslatable) {
-            $textInput->translatable();
-        }
-
         /** Input: "Slug" (+ view) */
         $slugInput = SlugInput::make($fieldSlug)
 
@@ -182,6 +178,10 @@ class TitleWithSlugInput
         /** Input: "Slug Auto Update Disabled" (Hidden) */
         $hiddenInputSlugAutoUpdateDisabled = Hidden::make('slug_auto_update_disabled')
             ->dehydrated(false);
+
+        if ($titleIsTranslatable) {
+            $textInput = $textInput->translatable();
+        }
 
         /** Group */
 
