@@ -39,17 +39,6 @@ You can watch a short demo video of the packages below.
 
 [![Video](docs/camya-filament-title-with-slug_teaser_video.jpg)](https://www.youtube.com/watch?v=5u1Nepm2NiI)
 
-## Support us
-
-You can support my work with a [donation](https://www.paypal.com/paypalme/epicbundle).
-
-[Follow me on Twitter](https://twitter.com/camyaCom) for DEV updates.
-
-Support the package: Please give it a &#11088; Star on GitHub and on the official
-Filament [plugin page](https://filamentphp.com/plugins/title-with-slug-permalink), if it's helpful for you.
-
-Visit the plugin's [Composer Packagist page](https://packagist.org/packages/camya/filament-title-with-slug) (The PHP Package Repository) for the current install count and more.
-
 ## Table of contents
 
 - [Installation](#installation)
@@ -82,7 +71,7 @@ Visit the plugin's [Composer Packagist page](https://packagist.org/packages/camy
 You can install the package via composer:
 
 ```bash
-composer require camya/filament-title-with-slug
+composer require blendbyte/filament-title-with-slug
 ```
 
 If needed, you can publish the config file with:
@@ -104,16 +93,16 @@ You'll find the published translations here: `trans/vendor/filament-title-with-s
 This package is translated
 to:
 
-- [English (en)](https://github.com/camya/filament-title-with-slug/blob/main/resources/lang/en/package.php)
-- [French (fr)](https://github.com/camya/filament-title-with-slug/blob/main/resources/lang/fr/package.php)
-- [Brazilian Portuguese (pt_BR)](https://github.com/camya/filament-title-with-slug/blob/main/resources/lang/pt_BR/package.php)
-- [German (de)](https://github.com/camya/filament-title-with-slug/blob/main/resources/lang/de/package.php)
-- [Dutch (nl)](https://github.com/camya/filament-title-with-slug/blob/main/resources/lang/nl/package.php)
-- [Indonesian (id)](https://github.com/camya/filament-title-with-slug/blob/main/resources/lang/id/package.php)
-- [Arabic (ar)](https://github.com/camya/filament-title-with-slug/blob/main/resources/lang/ar/package.php)
+- [English (en)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/en/package.php)
+- [French (fr)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/fr/package.php)
+- [Brazilian Portuguese (pt_BR)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/pt_BR/package.php)
+- [German (de)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/de/package.php)
+- [Dutch (nl)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/nl/package.php)
+- [Indonesian (id)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/id/package.php)
+- [Arabic (ar)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/ar/package.php)
 
 You translated it too? Share your translation on
-our [GitHub discussions](https://github.com/camya/filament-title-with-slug/discussions) page.
+our [GitHub discussions](https://github.com/blendbyte/filament-title-with-slug/discussions) page.
 
 ## Usage & examples
 
@@ -121,7 +110,7 @@ our [GitHub discussions](https://github.com/camya/filament-title-with-slug/discu
 
 This package provides the custom InputField `TitleWithSlugInput` for the **Filament Form Builder**.
 
-Read the [installation details for Filament](https://filamentphp.com/docs/2.x/admin/installation) here.
+Read the [installation details for Filament](https://filamentphp.com/docs/3.x/admin/installation) here.
 
 Below an example, where to put the new field inside your Filament Resource.
 
@@ -564,6 +553,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
+This is a fork from ```camya/filament-title-with-slug```, updated to work with Filament v3.0.
+
 - [Andreas Scheibel (camya)](https://github.com/camya) (Developer at  [camya.com](https://www.camya.com)
   / [epicbundle.com](https://www.epicbundle.com))
 
@@ -583,19 +574,3 @@ Component [Pest Tests](https://pestphp.com/).
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Tooling - Development tools I use
-
-- [PHPStorm](https://www.jetbrains.com/phpstorm/) IDE (+ [Laravel Idea](https://plugins.jetbrains.com/plugin/13441-laravel-idea) Plugin)
-- Laravel with [Valet](https://laravel.com/docs/9.x/valet)
-  and [Lambo](https://github.com/https://github.com/tighten/lambo/lambo)
-- [GitHub Desktop](https://desktop.github.com/)
-- Translations with [DeepL](https://www.deepl.com/translator) and [LanguageTool](https://languagetool.org/)
-- [Markdown TOC Generator](https://luciopaiva.com/markdown-toc/)
-- SVG Icons by [Heroicons](https://heroicons.com/)
-- [iTerm2](https://iterm2.com/) Terminal
-- [Regex101](https://regex101.com/) - Build, text, debug regex.
-- [Affinity](https://affinity.serif.com/) Photo & Designer
-- [VSCode](https://code.visualstudio.com/)
-
-[Follow me on Twitter](https://twitter.com/camyaCom)
