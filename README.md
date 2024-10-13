@@ -518,6 +518,7 @@ Below is an example with some defaults overridden.
     titleIsReadonly: fn($context) => $context !== 'create',
     titleAutofocus: true,
     titleAfterStateUpdated: function ($state) {},
+    titleFieldWrapper: function($input){ return $input; },
     
     // Slug
     slugLabel: 'The Slug: ',
