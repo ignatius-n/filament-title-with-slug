@@ -38,7 +38,7 @@ class TitleWithSlugInput
         bool|Closure $titleIsReadonly = false,
         bool|Closure $titleAutofocus = true,
         Closure $titleAfterStateUpdated = null,
-        bool $titleIsTranslatable = false,
+        Closure $titleFieldWrapper = null,
 
         // Slug
         string $slugLabel = null,
@@ -179,8 +179,9 @@ class TitleWithSlugInput
         $hiddenInputSlugAutoUpdateDisabled = Hidden::make('slug_auto_update_disabled')
             ->dehydrated(false);
 
-        if ($titleIsTranslatable) {
-            $textInput = $textInput->translatable();
+        // Wrap title field into wrapping closure, if set
+        if ($titleFieldWrapper) {
+            $textInput = $titleFieldWrapper($textInput);
         }
 
         /** Group */
