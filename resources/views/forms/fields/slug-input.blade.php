@@ -142,8 +142,7 @@
 					style="display: none;"
 				>
 
-				<div class="fi-input-wrp">
-                    <div class="fi-input-wrp-content-ctn">
+				<div class="flex overflow-hidden transition duration-75 bg-white rounded-lg shadow-sm fi-input-wrapper ring-1 focus-within:ring-2 dark:bg-white/5 ring-gray-950/10 focus-within:ring-primary-600 dark:ring-white/20 dark:focus-within:ring-primary-500 fi-fo-text-input">
 						<input
 							type="text"
 							x-ref="slugInput"
@@ -156,42 +155,55 @@
 							{!! ($placeholder = $getPlaceholder()) ? "placeholder=\"{$placeholder}\"" : null !!}
 							{!! $isRequired() ? 'required' : null !!}
 							{{ $getExtraInputAttributeBag()->class([
-								'fi-input text-sm font-semibold',
+								'fi-input block w-full border-none bg-transparent py-1.5 text-base text-gray-950 outline-none transition duration-75 placeholder:text-gray-400 focus:ring-0 disabled:text-gray-500 disabled:[-webkit-text-fill-color:theme(colors.gray.500)] disabled:placeholder:[-webkit-text-fill-color:theme(colors.gray.400)] dark:text-white dark:placeholder:text-gray-500 dark:disabled:text-gray-400 dark:disabled:[-webkit-text-fill-color:theme(colors.gray.400)] dark:disabled:placeholder:[-webkit-text-fill-color:theme(colors.gray.500)] sm:text-xs sm:leading-6 ps-3 pe-3',
 								'border-danger-600 ring-danger-600' => $errors->has($getStatePath())])
 							}}
 						/>
-                    </div>
 					</div>
+
 				</div>
 
 				<div
 					x-show="editing"
-					class="flex gap-2 items-center"
+					class="flex space-x-2 gap-2"
 					style="display: none;"
 				>
 
-                    <x-filament::button x-on:click.prevent="submitModification()">
-                        {{ trans('filament-title-with-slug::package.permalink_action_ok') }}
-                    </x-filament::button>
+					<a
+						href="#"
+						role="button"
+						x-on:click.prevent="submitModification()"
+						style="--c-400:var(--primary-400);--c-500:var(--primary-500);--c-600:var(--primary-600);"
+						class="
+						fi-btn fi-btn-size-md relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus:ring-2 disabled:pointer-events-none disabled:opacity-70 rounded-lg fi-btn-color-primary gap-1.5 px-3 py-2 text-sm inline-grid shadow-sm bg-custom-600 text-white hover:bg-custom-500 dark:bg-custom-500 dark:hover:bg-custom-400 focus:ring-custom-500/50 dark:focus:ring-custom-400/50 fi-ac-btn-action
+						"
+					>
+						{{ trans('filament-title-with-slug::package.permalink_action_ok') }}
+					</a>
 
-                    <x-filament::icon-button
-                        icon="heroicon-o-arrow-path"
-                        size="sm"
-                        color="info"
-                        x-show="context === 'edit' && modified"
-                        x-on:click.prevent="resetModification()"
-                        :label="trans('filament-title-with-slug::package.permalink_action_reset')"
-                        :tooltip="trans('filament-title-with-slug::package.permalink_action_reset')"
-                    />
+					<x-filament::link
+						x-show="context === 'edit' && modified"
+						x-on:click.prevent="resetModification()"
+						class="cursor-pointer ml-4"
+						icon="heroicon-o-arrow-path"
+						color="gray"
+						size="sm"
+						title="{{ trans('filament-title-with-slug::package.permalink_action_reset') }}"
+					>
+						<span class="sr-only">{{ trans('filament-title-with-slug::package.permalink_action_reset') }}</span>
+					</x-filament::link>
 
-                    <x-filament::icon-button
-                        icon="heroicon-o-x-mark"
-                        size="sm"
-                        color="danger"
-                        x-on:click.prevent="cancelModification()"
-                        :label="trans('filament-title-with-slug::package.permalink_action_cancel')"
-                        :tooltip="trans('filament-title-with-slug::package.permalink_action_cancel')"
-                    />
+					<x-filament::link
+						x-on:click.prevent="cancelModification()"
+						class="cursor-pointer"
+						icon="heroicon-o-x-mark"
+						color="gray"
+						size="sm"
+						title="{{ trans('filament-title-with-slug::package.permalink_action_cancel') }}"
+					>
+						<span class="sr-only">{{ trans('filament-title-with-slug::package.permalink_action_cancel') }}</span>
+					</x-filament::link>
+
 				</div>
 
 				<span
