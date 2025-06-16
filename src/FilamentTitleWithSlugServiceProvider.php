@@ -21,7 +21,7 @@ class FilamentTitleWithSlugServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         FilamentAsset::register([
-            Css::make('filament-title-with-slug', __DIR__.'/../resources/dist/filament-title-with-slug.css'),
+            Css::make('filament-title-with-slug', __DIR__.'/../resources/dist/filament-title-with-slug.css')->loadedOnRequest(),
         ], 'filament-title-with-slug');
     }
 }
