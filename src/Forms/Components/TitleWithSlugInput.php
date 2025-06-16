@@ -4,7 +4,7 @@ namespace Camya\Filament\Forms\Components;
 
 use Camya\Filament\Forms\Fields\SlugInput;
 use Closure;
-use Filament\Schemas\Components\FusedGroup;
+use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Utilities\Get;
@@ -51,7 +51,7 @@ class TitleWithSlugInput
         Closure $slugSlugifier = null,
         string|Closure $slugRuleRegex = '/^[a-z0-9\-\_]*$/',
         string|Closure $slugLabelPostfix = null,
-    ): FusedGroup {
+    ): Group {
         $fieldTitle = $fieldTitle ?? config('filament-title-with-slug.field_title');
         $fieldSlug = $fieldSlug ?? config('filament-title-with-slug.field_slug');
         $urlHost = $urlHost ?? config('filament-title-with-slug.url_host');
@@ -185,7 +185,7 @@ class TitleWithSlugInput
         }
 
         /** FusedGroup */
-        return FusedGroup::make()
+        return Group::make()
             ->schema([
                 $textInput,
                 $slugInput,
