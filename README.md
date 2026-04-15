@@ -1,4 +1,4 @@
-[![](docs/camya-filament-title-with-slug_teaser-github.jpg)](docs/camya-filament-title-with-slug_teaser-github.jpg)
+<img width="2560" height="840" alt="filament-title-with-slug-banner" src="https://github.com/user-attachments/assets/a2cc8aa4-5612-4497-bb18-4c1d9b1cce1b" />
 
 # Title With Slug — Easy Permalink Slugs for Filament Forms
 
