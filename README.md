@@ -1,80 +1,70 @@
-<img src="docs/camya-filament-title-with-slug_teaser-github.jpg" />
+[![](docs/camya-filament-title-with-slug_teaser-github.jpg)](docs/camya-filament-title-with-slug_teaser-github.jpg)
 
-# "Title With Slug" Input - Easy Permalink Slugs for Filament Forms (PHP / Laravel / Livewire)
+# Title With Slug — Easy Permalink Slugs for Filament Forms
 
-This package for [FilamentPHP](https://filamentphp.com/plugins/title-with-slug-permalink) adds the form component `TitleWithSlugInput` which allows to
-edit titles and slugs easily.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/blendbyte/filament-title-with-slug.svg?style=flat-square)](https://packagist.org/packages/blendbyte/filament-title-with-slug)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 
-It is inspired by the classic **WordPress title & slug** implementation.
+A [Filament](https://filamentphp.com/) form component that provides a WordPress-style title & slug input. Auto-generates slugs from titles, supports undo, dark mode, custom slugifiers, and is fully configurable and translatable.
 
-The plugin is fully configurable. You can change all labels, use your own slugifier, use a route() to generate the "
-View" link, hide the host name, and many more. Read the [full documentation](#installation)
+Forked from [camya/filament-title-with-slug](https://github.com/camya/filament-title-with-slug), updated for Filament v3.
 
 ```php
 TitleWithSlugInput::make(
-    fieldTitle: 'title', // The name of the field in your model that stores the title.
-    fieldSlug: 'slug', // The name of the field in your model that will store the slug.
+    fieldTitle: 'title',
+    fieldSlug: 'slug',
 ),
 ```
 
-The output looks like this: (Watch **[&raquo; Demo Video &laquo;](https://www.youtube.com/watch?v=5u1Nepm2NiI)**)
+The output looks like this: (Watch **[» Demo Video «](https://www.youtube.com/watch?v=5u1Nepm2NiI)**)
 
-<img src="docs/examples/camya-filament-title-with-slug_example_change-fields_01.jpg" width="600" />
+[![](docs/examples/camya-filament-title-with-slug_example_change-fields_01.jpg)](docs/examples/camya-filament-title-with-slug_example_change-fields_01.jpg)
 
-<img src="docs/examples/camya-filament-title-with-slug_example_change-fields_02.jpg" width="600" />
+[![](docs/examples/camya-filament-title-with-slug_example_change-fields_02.jpg)](docs/examples/camya-filament-title-with-slug_example_change-fields_02.jpg)
 
 ## Features
 
-- Slug edit form.
+- Slug edit form with permalink preview.
 - "Visit" link to view the generated URL.
 - Auto-generates the slug from the title, if it has not already been manually updated.
 - Undo an edited slug.
 - All texts customizable and translatable.
-- Dark Mode supported.
+- Dark mode supported.
 - Fully configurable, see [all available parameters](#all-available-parameters).
 
-## Video
-
-You can watch a short demo video of the packages below.
-
-[![Video](docs/camya-filament-title-with-slug_teaser_video.jpg)](https://www.youtube.com/watch?v=5u1Nepm2NiI)
-
-## Table of contents
+## Table of Contents
 
 - [Installation](#installation)
-- [Usage & examples](#usage--examples)
-    - [Basic usage - Add TitleWithSlugInput to a Filament Form](#basic-usage---add-titlewithsluginput-to-a-filament-form)
-    - [Change model fields names](#change-model-fields-names)
-    - [Change labels, titles, placeholder](#change-labels-titles-placeholder)
-    - [Permalink preview: Hide host](#permalink-preview-hide-host)
-    - [Permalink preview: Change host and path](#permalink-preview-change-host-and-path)
-    - ["Visit" link - Use router to generate URL with route()](#visit-link---use-router-to-generate-url-with-route)
-    - [Hide "Visit" link](#hide-visit-link)
-    - [Style the "title" input field](#style-the-title-input-field)
-    - [Add extra validation rules for title or slug](#add-extra-validation-rules-for-title-or-slug)
-    - [Custom error messages](#custom-error-messages)
-    - [Custom unique validation rules for title (and slug)](#custom-unique-validation-rules-for-title-and-slug)
-    - [Custom slugifier](#custom-slugifier)
-    - [Dark Mode](#dark-mode)
-    - [How to set a empty homepage slug](#how-to-set-a-empty-homepage-slug)
-    - [Use within a relationship repeater](#use-within-a-relationship-repeater)
-    - [Make a URL slug sandwich. (path/slug/path)](#make-a-url-slug-sandwich-pathslugpath)
-    - [Use the slug as subdomain](#use-the-slug-as-subdomain)
-    - [Package config file - Set default values](#package-config-file---set-default-values)
-    - [**All available parameters**](#all-available-parameters)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
+- [Translation](#translation)
+- [Usage & Examples](#usage--examples)
+  - [Basic usage](#basic-usage---add-titlewithsluginput-to-a-filament-form)
+  - [Change model field names](#change-model-fields-names)
+  - [Change labels, titles, placeholder](#change-labels-titles-placeholder)
+  - [Permalink preview: Hide host](#permalink-preview-hide-host)
+  - [Permalink preview: Change host and path](#permalink-preview-change-host-and-path)
+  - ["Visit" link with route()](#visit-link---use-router-to-generate-url-with-route)
+  - [Hide "Visit" link](#hide-visit-link)
+  - [Style the title input](#style-the-title-input-field)
+  - [Extra validation rules](#add-extra-validation-rules-for-title-or-slug)
+  - [Custom error messages](#custom-error-messages)
+  - [Custom unique validation](#custom-unique-validation-rules-for-title-and-slug)
+  - [Custom slugifier](#custom-slugifier)
+  - [Dark mode](#dark-mode)
+  - [Empty homepage slug](#how-to-set-a-empty-homepage-slug)
+  - [Within a relationship repeater](#use-within-a-relationship-repeater)
+  - [URL slug sandwich (path/slug/path)](#make-a-url-slug-sandwich-pathslugpath)
+  - [Slug as subdomain](#use-the-slug-as-subdomain)
+  - [Config file defaults](#package-config-file---set-default-values)
+  - [All available parameters](#all-available-parameters)
 - [Credits](#credits)
 
 ## Installation
-
-You can install the package via composer:
 
 ```bash
 composer require blendbyte/filament-title-with-slug
 ```
 
-If needed, you can publish the config file with:
+Optionally publish the config file:
 
 ```bash
 php artisan vendor:publish --tag="filament-title-with-slug-config"
@@ -82,43 +72,25 @@ php artisan vendor:publish --tag="filament-title-with-slug-config"
 
 ## Translation
 
-If needed, you can publish the translation files with:
+Publish the translation files:
 
 ```bash
 php artisan vendor:publish --tag="filament-title-with-slug-translations"
 ```
 
-You'll find the published translations here: `trans/vendor/filament-title-with-slug`
+Published translations are located at `trans/vendor/filament-title-with-slug`.
 
-This package is translated
-to:
+Included translations: [English](resources/lang/en/package.php), [French](resources/lang/fr/package.php), [Brazilian Portuguese](resources/lang/pt_BR/package.php), [German](resources/lang/de/package.php), [Dutch](resources/lang/nl/package.php), [Indonesian](resources/lang/id/package.php), [Arabic](resources/lang/ar/package.php).
 
-- [English (en)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/en/package.php)
-- [French (fr)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/fr/package.php)
-- [Brazilian Portuguese (pt_BR)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/pt_BR/package.php)
-- [German (de)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/de/package.php)
-- [Dutch (nl)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/nl/package.php)
-- [Indonesian (id)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/id/package.php)
-- [Arabic (ar)](https://github.com/blendbyte/filament-title-with-slug/blob/main/resources/lang/ar/package.php)
+Translated it to another language? Share it on our [GitHub Discussions](https://github.com/blendbyte/filament-title-with-slug/discussions) page.
 
-You translated it too? Share your translation on
-our [GitHub discussions](https://github.com/blendbyte/filament-title-with-slug/discussions) page.
-
-## Usage & examples
+## Usage & Examples
 
 ### Basic usage - Add TitleWithSlugInput to a Filament Form
 
-This package provides the custom InputField `TitleWithSlugInput` for the **Filament Form Builder**.
-
-Read the [installation details for Filament](https://filamentphp.com/docs/3.x/admin/installation) here.
-
-Below an example, where to put the new field inside your Filament Resource.
-
-- `fieldTitle`: The name of the field in your model that stores the title.
-- `fieldSlug`: The name of the field in your model that will store the slug.
+This package provides the custom input field `TitleWithSlugInput` for the [Filament Form Builder](https://filamentphp.com/docs/3.x/admin/installation).
 
 ```php
-
 use Camya\Filament\Forms\Components\TitleWithSlugInput;
 
 class PostResource extends Resource
@@ -126,12 +98,12 @@ class PostResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-        
+
             TitleWithSlugInput::make(
                 fieldTitle: 'title',
                 fieldSlug: 'slug',
             )
-            
+
         ]);
     }
 }
@@ -139,21 +111,12 @@ class PostResource extends Resource
 
 > **Tip:** To occupy the full width, use `TitleWithSlugInput::make()->columnSpan('full')`.
 
-The output looks like this:
-
-<img src="docs/examples/camya-filament-title-with-slug_example_change-fields_01.jpg" width="600" />
-<img src="docs/examples/camya-filament-title-with-slug_example_change-fields_02.jpg" width="600" />
-
 ### Change model fields names
 
-The package assumes, that you model fields are named `title` and `slug`.
-
-You can easily change them according to your needs.
-
-In the example below, the package now uses the database fields `name` for the title and `identifier` for the slug.
+The package assumes your model fields are named `title` and `slug`. You can change them:
 
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     fieldTitle: 'name',
     fieldSlug: 'identifier',
 )
@@ -161,12 +124,10 @@ In the example below, the package now uses the database fields `name` for the ti
 
 ### Change labels, titles, placeholder
 
-It's possible to change all labels on the fly.
-
-In this example, we also add the base path `/books/`.
+All labels can be changed on the fly. In this example, we also add the base path `/books/`:
 
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     urlPath: '/book/',
     urlVisitLinkLabel: 'Visit Book',
     titleLabel: 'Title',
@@ -175,102 +136,75 @@ In this example, we also add the base path `/books/`.
 )
 ```
 
-> Tip: You can [translate the package](#contributing) completely.
+[![](docs/examples/camya-filament-title-with-slug_example_change-labels_01.jpg)](docs/examples/camya-filament-title-with-slug_example_change-labels_01.jpg)
 
-The output looks like this:
-
-<img src="docs/examples/camya-filament-title-with-slug_example_change-labels_01.jpg" width="600" />
-<img src="docs/examples/camya-filament-title-with-slug_example_change-labels_02.jpg" width="600" />
+[![](docs/examples/camya-filament-title-with-slug_example_change-labels_02.jpg)](docs/examples/camya-filament-title-with-slug_example_change-labels_02.jpg)
 
 ### Permalink preview: Hide host
 
-You can hide the host part of the permalink preview.
-
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     urlHostVisible: false,
 )
 ```
 
-The output looks like this:
-
-<img src="docs/examples/camya-filament-title-with-slug_example_host-hidden_01.jpg" width="600" />
+[![](docs/examples/camya-filament-title-with-slug_example_host-hidden_01.jpg)](docs/examples/camya-filament-title-with-slug_example_host-hidden_01.jpg)
 
 ### Permalink preview: Change host and path
 
-You can set the path and the host for the preview.
-
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     urlPath: '/category/',
     urlHost: 'https://project.local',
 )
 ```
 
-The output looks like this:
-
-<img src="docs/examples/camya-filament-title-with-slug_example_host-change_01.jpg" width="600" />
+[![](docs/examples/camya-filament-title-with-slug_example_host-change_01.jpg)](docs/examples/camya-filament-title-with-slug_example_host-change_01.jpg)
 
 ### "Visit" link - Use router to generate URL with route()
 
-You can use a named route, e.g. `route('product.show', ['slug' => $record->slug])`, to generated the "Visit" link.
+Use a named route to generate the "Visit" link:
 
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     urlPath: '/product/',
     urlHost: 'camya.com',
-    urlVisitLinkRoute: fn(?Model $record) => $record?->slug 
+    urlVisitLinkRoute: fn(?Model $record) => $record?->slug
         ? route('product.show', ['slug' => $record->slug])
         : null,
 )
 ```
 
-Laravel documentation: 
-[Generating URLs To Named Routes](https://laravel.com/docs/9.x/routing#generating-urls-to-named-routes)
+Because the "Visit" link is now generated by a route, you can use partial hosts like `urlHost: 'camya.com'` to shorten the permalink preview.
 
-By default, the package concatenates the strings `host + path + slug` to generate the "Visit" link.
-
-Because the "Visit" link now is generated by an route, you can use partial hosts like `urlHost: 'camya.com'` to shorten
-the permalink preview.
-
-The output looks like this:
-
-<img src="docs/examples/camya-filament-title-with-slug_example_host-partial_01.jpg" width="600" />
+[![](docs/examples/camya-filament-title-with-slug_example_host-partial_01.jpg)](docs/examples/camya-filament-title-with-slug_example_host-partial_01.jpg)
 
 ### Hide "Visit" link
 
-You can remove the "Visit" link completely.
-
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     urlVisitLinkVisible: false,
 )
 ```
 
 ### Style the "title" input field
 
-In order to style the "title" input field, you can pass the attributes `class` via `titleExtraInputAttributes`
-parameter.
+Pass attributes via `titleExtraInputAttributes`:
 
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     titleExtraInputAttributes: ['class' => 'italic'],
 )
 ```
 
-The output looks like this:
-
-<img src="docs/examples/camya-filament-title-with-slug_example_styling_01.jpg" width="600" />
+[![](docs/examples/camya-filament-title-with-slug_example_styling_01.jpg)](docs/examples/camya-filament-title-with-slug_example_styling_01.jpg)
 
 ### Add extra validation rules for title or slug
 
-You can add additional validation rules by passing in the variables `titleRules` or `slugRules`.
-
-In addition, a unique validation rule is applied to the slug field automatically. In order to modify the unique rule,
-read [Custom unique validation rules for title (and slug)](#custom-unique-validation-rules-for-title-and-slug).
+Pass additional validation rules via `titleRules` or `slugRules`. A unique validation rule is applied to the slug field automatically — to modify it, see [Custom unique validation](#custom-unique-validation-rules-for-title-and-slug).
 
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     titleRules: [
         'required',
         'string',
@@ -280,28 +214,22 @@ read [Custom unique validation rules for title (and slug)](#custom-unique-valida
 )
 ```
 
-You can also [customize the error messages](#custom-error-messages).
-
 ### Custom error messages
 
-You can customize the error messages in your EditModel and CreateModel filament resources by adding the $messages member
-variable.
+Customize error messages in your EditModel and CreateModel Filament resources:
 
 ```php
 protected $messages = [
-  'data.slug.regex' => 'Invalid Slug. Use only chars (a-z), numbers (0-9), and the dash (-).',
+    'data.slug.regex' => 'Invalid Slug. Use only chars (a-z), numbers (0-9), and the dash (-).',
 ];
 ```
 
 ### Custom unique validation rules for title (and slug)
 
-Unique validation rules can be modified only by using the parameters `titleRuleUniqueParameters` and
-the `slugRuleUniqueParameters` counterpart.
-
-This is needed in order to set Filament's "ignorable" parameter correctly.
+Unique validation rules can be modified via `titleRuleUniqueParameters` and `slugRuleUniqueParameters`:
 
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     titleRuleUniqueParameters: [
         'modifyRuleUsing' => fn(Unique $rule) => $rule->where('is_published', 1),
         'ignorable' => fn(?Model $record) => $record,
@@ -309,78 +237,54 @@ This is needed in order to set Filament's "ignorable" parameter correctly.
 )
 ```
 
-This array is inserted into the input field's `->unique(...[$slugRuleUniqueParameters])` method.
+This array is inserted into the input field's `->unique(...[$slugRuleUniqueParameters])` method. See Filament's documentation on the [Unique](https://filamentphp.com/docs/2.x/forms/validation#unique) rule.
 
-Read Filament's documentation for the [Unique](https://filamentphp.com/docs/2.x/forms/validation#unique) method.
-
-Available array keys:
-
-```php
-'ignorable' (Model | Closure)
-'modifyRuleUsing' (?Closure)
-'ignoreRecord' (bool)
-'table' (string | Closure | null)  
-'column' (string | Closure | null) 
-```
+Available array keys: `ignorable` (Model | Closure), `modifyRuleUsing` (?Closure), `ignoreRecord` (bool), `table` (string | Closure | null), `column` (string | Closure | null).
 
 ### Custom slugifier
 
-This package uses Laravel's slugifier, `Str::slug()`, but it is possible to replace it with one of your own.
-
-The following generates a slug with only the characters a-z and validates them with a regex.
+This package uses `Str::slug()` by default. You can replace it with your own:
 
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
-    slugSlugifier: fn($string) => preg_replace( '/[^a-z]/', '', $string),
+TitleWithSlugInput::make(
+    slugSlugifier: fn($string) => preg_replace('/[^a-z]/', '', $string),
     slugRuleRegex: '/^[a-z]*$/',
 )
 ```
 
-Note: You can customize the validation error, see [Custom error messages](#custom-error-messages).
-
 ### Dark Mode
 
-The package supports [Filaments dark mode](https://filamentphp.com/docs/2.x/admin/appearance#dark-mode). Dark mode
-output looks like this:
+The package supports [Filament's dark mode](https://filamentphp.com/docs/2.x/admin/appearance#dark-mode):
 
-<img src="docs/examples/camya-filament-title-with-slug_example_dark-mode_01.jpg" width="600" />
-<img src="docs/examples/camya-filament-title-with-slug_example_dark-mode_02.jpg" width="600" />
+[![](docs/examples/camya-filament-title-with-slug_example_dark-mode_01.jpg)](docs/examples/camya-filament-title-with-slug_example_dark-mode_01.jpg)
+
+[![](docs/examples/camya-filament-title-with-slug_example_dark-mode_02.jpg)](docs/examples/camya-filament-title-with-slug_example_dark-mode_02.jpg)
 
 ### How to set a empty homepage slug
 
-To set an empty slug, you must first remove the slug's `required` rule. You can do this by overwriting the `slugRules` array.
+First remove the slug's `required` rule by overwriting `slugRules`:
 
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     slugRules: [],
 ),
 ```
 
-In the input field of the component's slug form, use the `/` character to set the home page.
+Then use the `/` character in the slug input to set the homepage. The `/` is necessary to bypass the auto slug-regenerate that would trigger on an empty string.
 
-> The `/` character is necessary to bypass the **auto slug-regenerate** that would be triggered if the slug field is an empty string.
-
-The input looks like this:
-
-<img src="docs/examples/camya-filament-title-with-slug_example_homepage_01.jpg" width="600" />
-
+[![](docs/examples/camya-filament-title-with-slug_example_homepage_01.jpg)](docs/examples/camya-filament-title-with-slug_example_homepage_01.jpg)
 
 ### Use within a relationship repeater
 
-You can use the TitleWithSlugInput inside a repeater with a database relation.
-
-This example uses the Eloquent relationship `"Post hasMany FAQEntries"`.
-
-Read the [Laravel Eloquent Relationship](https://laravel.com/docs/9.x/eloquent-relationships#one-to-many)
-and the [Filament Repeater](https://filamentphp.com/docs/2.x/forms/fields#repeater) docs for details.
+You can use `TitleWithSlugInput` inside a repeater with a database relation (e.g. "Post hasMany FAQEntries"):
 
 ```php
-\Filament\Forms\Components\Repeater::make('FAQEntries')
+Repeater::make('FAQEntries')
     ->relationship()
     ->collapsible()
     ->schema([
 
-        \Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+        TitleWithSlugInput::make(
             fieldTitle: 'title',
             fieldSlug: 'slug',
             urlPath: '/faq/',
@@ -392,113 +296,80 @@ and the [Filament Repeater](https://filamentphp.com/docs/2.x/forms/fields#repeat
     ]),
 ```
 
-The output looks like this:
+[![](docs/examples/camya-filament-title-with-slug_example_repeater_01.jpg)](docs/examples/camya-filament-title-with-slug_example_repeater_01.jpg)
 
-<img src="docs/examples/camya-filament-title-with-slug_example_repeater_01.jpg" width="600" />
+### Make a URL slug sandwich (path/slug/path)
 
-### Make a URL slug sandwich. (path/slug/path)
-
-It is possible to create a URL with the slug in the middle of the path. 
-
-Example: "**/books/** *slug* **/detail/**"
-
-It is important to add a `urlVisitLinkRoute` closure to create a correct visit link. Please also read the ["urlVisitLinkRoute with named route"](#visit-link---use-router-to-generate-url-with-route) documentation.
+Create a URL with the slug in the middle of the path, e.g. `/books/slug/detail/`:
 
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     urlPath: '/books/',
-    urlVisitLinkRoute: fn (?Model $record) => $record?->slug
-        ? '/books/'.$record->slug.'/detail'
+    urlVisitLinkRoute: fn(?Model $record) => $record?->slug
+        ? '/books/' . $record->slug . '/detail'
         : null,
     slugLabelPostfix: '/detail/',
     urlVisitLinkLabel: 'Visit Book Details'
 ),
 ```
 
-The output looks like this:
-
-<img src="docs/examples/camya-filament-title-with-slug_example_slug-sandwich_01.jpg" width="600" />
+[![](docs/examples/camya-filament-title-with-slug_example_slug-sandwich_01.jpg)](docs/examples/camya-filament-title-with-slug_example_slug-sandwich_01.jpg)
 
 ### Use the slug as subdomain
 
-You can use the package to create the subdomain part of a URL with the following setup.
-
-Example: "*https://* **my-subdomain** *.camya.com*"
-
-It is important to add a `urlVisitLinkRoute` closure to create a correct visit link. Also, you need to set the name of the Eloquent model field for the subdomain using `slugField`.
-
-Please also read the ["urlVisitLinkRoute with named route"](#visit-link---use-router-to-generate-url-with-route) documentation.
+Use the package to generate subdomain URLs, e.g. `https://my-subdomain.camya.com`:
 
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
     fieldSlug: 'subdomain',
     urlPath: '',
     urlHostVisible: false,
     urlVisitLinkLabel: 'Visit Domain',
-    urlVisitLinkRoute: fn (?Model $record) => $record?->slug
-        ? 'https://'.$record->slug.'.camya.com'
+    urlVisitLinkRoute: fn(?Model $record) => $record?->slug
+        ? 'https://' . $record->slug . '.camya.com'
         : null,
     slugLabel: 'Domain:',
     slugLabelPostfix: '.camya.com',
 ),
 ```
 
-The output looks like this:
-
-<img src="docs/examples/camya-filament-title-with-slug_example_subdomain_01.jpg" width="600" />
+[![](docs/examples/camya-filament-title-with-slug_example_subdomain_01.jpg)](docs/examples/camya-filament-title-with-slug_example_subdomain_01.jpg)
 
 ### Package config file - Set default values
 
-This package comes with some default values that can be easily overridden programmatically.
-
-If you have other defaults, you can publish the configuration file and change them globally.
+If you have different defaults, publish the config and change them globally:
 
 ```bash
 php artisan vendor:publish --tag="filament-title-with-slug-config"
 ```
 
-You'll find the published config here: `config/filament-title-with-slug-config.php`
-
-The values can be programmatically overridden with: `TitleWithSlugInput::make(fieldTitle: 'title')`
+The published config is at `config/filament-title-with-slug-config.php`:
 
 ```php
 [
-    'field_title' => 'title', // Overwrite with (fieldTitle: 'title')
-    'field_slug' => 'slug', // Overwrite with (fieldSlug: 'title')
-    'url_host' => env('APP_URL'), // Overwrite with (urlHost: 'https://www.camya.com/')
+    'field_title' => 'title', // Override with (fieldTitle: 'title')
+    'field_slug' => 'slug',   // Override with (fieldSlug: 'slug')
+    'url_host' => env('APP_URL'), // Override with (urlHost: 'https://www.example.com/')
 ];
-
 ```
 
 ### All available parameters
 
-You can call TitleWithSlugInput without parameters, and it will work and use its default values.
-
-In order to set parameters, you use [PHP8's Named Arguments](https://laravel-news.com/modern-php-features-explained)
-syntax.
+You can call `TitleWithSlugInput` without parameters and it will use its defaults. Parameters use [PHP 8 Named Arguments](https://laravel-news.com/modern-php-features-explained) syntax.
 
 ```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
-    fieldTitle: 'title',
-    fieldSlug: 'slug',
-);
-```
-
-Below is an example with some defaults overridden.
-
-```php
-\Camya\Filament\Forms\Components\TitleWithSlugInput::make(
+TitleWithSlugInput::make(
 
     // Model fields
     fieldTitle: 'title',
     fieldSlug: 'slug',
 
-    // Url
+    // URL
     urlPath: '/blog/',
     urlHost: 'https://www.camya.com',
     urlHostVisible: true,
     urlVisitLinkLabel: 'View',
-    urlVisitLinkRoute: fn(?Model $record) => $record?->slug 
+    urlVisitLinkRoute: fn(?Model $record) => $record?->slug
         ? route('post.show', ['slug' => $record->slug])
         : null,
     urlVisitLinkVisible: true,
@@ -518,8 +389,8 @@ Below is an example with some defaults overridden.
     titleIsReadonly: fn($context) => $context !== 'create',
     titleAutofocus: true,
     titleAfterStateUpdated: function ($state) {},
-    titleFieldWrapper: function($input){ return $input; },
-    
+    titleFieldWrapper: function ($input) { return $input; },
+
     // Slug
     slugLabel: 'The Slug: ',
     slugRules: [
@@ -539,39 +410,22 @@ Below is an example with some defaults overridden.
 )->columnSpan('full'),
 ```
 
-## Changelog
-
-Please see the [release changelog](https://github.com/camya/filament-title-with-slug/releases) for more information on what has changed recently.
-
-## Contributing
-
-Want to implement a feature, fix a bug, or translate this package? Please see [contributing](.github/CONTRIBUTING.md)
-for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
 ## Credits
 
-This is a fork from ```camya/filament-title-with-slug```, updated to work with Filament v3.0.
+Originally created by [Andreas Scheibel (camya)](https://github.com/camya). Inspired by packages from [awcodes](https://github.com/awcodes/) and the work of [spatie](https://github.com/spatie/). Tests built with [Pest](https://pestphp.com/) following patterns from [ralphjsmit](https://github.com/ralphjsmit/).
 
-- [Andreas Scheibel (camya)](https://github.com/camya) (Developer at  [camya.com](https://www.camya.com)
-  / [epicbundle.com](https://www.epicbundle.com))
+Please see the [release changelog](https://github.com/blendbyte/filament-title-with-slug/releases) for version history, and [contributing](https://github.com/blendbyte/filament-title-with-slug/blob/main/.github/CONTRIBUTING.md) for how to get involved. Security vulnerabilities can be reported via our [security policy](https://github.com/blendbyte/filament-title-with-slug/security/policy).
 
-[FilamentPHP](https://filamentphp.com/plugins/title-with-slug-permalink)
-is based on
-[Laravel](https://laravel.com/),
-[Livewire](https://laravel-livewire.com/),
-[AlpineJS](https://alpinejs.dev/),
-and
-[TailwindCSS](https://tailwindcss.com/). (aka Tall Stack)
+---
 
-This package was inspired by a package
-by [awcodes](https://github.com/awcodes/) and the work of [spatie](https://github.com/spatie/).
-Thanks also to [ralphjsmit](https://github.com/ralphjsmit/) for his blueprint that I used to implement the Filament
-Component [Pest Tests](https://pestphp.com/).
+## Maintained by Blendbyte
 
-## License
+<a href="https://www.blendbyte.com">
+  <img src="https://avatars.githubusercontent.com/u/69378377?s=200&v=4" alt="Blendbyte" width="80" align="left" style="margin-right: 16px;">
+</a>
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+This project is maintained by **[Blendbyte](https://www.blendbyte.com)** — a team of engineers with 20+ years of experience building cloud infrastructure, web applications, and developer tools. We use these packages in production ourselves and actively contribute to the open source ecosystem we rely on every day. Issues and PRs are always welcome.
+
+🌐 [blendbyte.com](https://www.blendbyte.com) · 📧 [hello@blendbyte.com](mailto:hello@blendbyte.com)
+
+<br clear="left">
