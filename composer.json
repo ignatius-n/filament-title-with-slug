@@ -1,6 +1,6 @@
 {
     "name": "blendbyte/filament-title-with-slug",
-    "description": "TitleWithSlugInput - Easy Permalink Slugs for the FilamentPHP Form Builder (PHP / Laravel / Livewire)",
+    "description": "WordPress-style title & slug input for Filament Forms — auto-generates permalinks with live preview, undo, dark mode & full customization. Fork of camya/filament-title-with-slug, maintained for Filament v3.",
     "keywords": [
         "framework",
         "laravel",
