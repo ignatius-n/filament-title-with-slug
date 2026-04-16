@@ -13,10 +13,10 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Andreas Scheibel",
-            "email": "contact@camya.com",
+            "name": "Blendbyte",
+            "email": "hello@blendbyte.com",
             "role": "Developer",
-            "homepage": "https://www.camya.com"
+            "homepage": "https://www.blendbyte.com"
         }
     ],
     "require": {
