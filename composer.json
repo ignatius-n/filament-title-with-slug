@@ -37,9 +37,6 @@
         "phpstan/phpstan-deprecation-rules": "^2.0"
     },
     "autoload": {
-        "files": [
-            "src/helpers.php"
-        ],
         "psr-4": {
             "Blendbyte\\FilamentTitleWithSlug\\": "src"
         }
