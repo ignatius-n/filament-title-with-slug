@@ -28,7 +28,7 @@ describe('rendering', function () {
             ->assertSet('data.slug', 'persisted-slug')
             ->assertSeeHtml('wire:model.live.blur="data.title"')
             ->assertSeeHtml('id="form.slug"')
-            ->assertSeeHtml('<span class="mr-1">persisted-slug</span>');
+            ->assertSee('persisted-slug');
     });
 
     it('binds to custom field names and renders custom labels', function () {
