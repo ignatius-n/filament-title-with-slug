@@ -4,23 +4,25 @@
     class="filament-seo-slug-input-wrapper"
 >
     @if($getSlugReadOnly())
-        <div class="fi-input-wrp flex items-center justify-between gap-4 px-3 py-1.5 leading-6 text-sm">
-            <span class="flex items-center gap-1 flex-1 min-w-0 text-gray-500 dark:text-gray-400">
-                <span class="shrink-0">{{ $getLabelPrefix() }}</span>
-                <span class="shrink-0">{{ $getFullBaseUrl() }}</span>
-                <span class="font-semibold text-gray-950 dark:text-white truncate">{{ $getState() }}</span>
+        <div class="fi-input-wrp fts-slug-row">
+            <span class="fts-slug-meta fts-slug-meta--flex1">
+                <span>{{ $getLabelPrefix() }}</span>
+                <span>{{ $getFullBaseUrl() }}</span>
+                <span class="fts-slug-value fts-truncate">{{ $getState() }}</span>
             </span>
 
             @if($getSlugInputUrlVisitLinkVisible())
-                <x-filament::link
-                    :href="$getRecordUrl()"
-                    target="_blank"
-                    size="sm"
-                    icon="heroicon-m-arrow-top-right-on-square"
-                    icon-position="after"
-                >
-                    {{ $getVisitLinkLabel() }}
-                </x-filament::link>
+                <span class="fts-slug-visit">
+                    <x-filament::link
+                        :href="$getRecordUrl()"
+                        target="_blank"
+                        size="sm"
+                        icon="heroicon-m-arrow-top-right-on-square"
+                        icon-position="after"
+                    >
+                        {{ $getVisitLinkLabel() }}
+                    </x-filament::link>
+                </span>
             @endif
         </div>
     @else
@@ -70,13 +72,11 @@
             }"
             x-on:submit.document="modified = false"
         >
-            <div class="fi-input-wrp flex items-center justify-between gap-4 px-3 py-1.5 leading-6 text-sm">
-                <span class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+            <div class="fi-input-wrp fts-slug-row">
+                <span class="fts-slug-meta" :style="editing ? 'flex: 0 1 auto;' : 'flex: 1; min-width: 0;'">
                     <span>{{ $getLabelPrefix() }}</span>
 
-                    <span
-                        x-text="!editing ? '{{ $getFullBaseUrl() }}' : '{{ $getBasePath() }}'"
-                    ></span>
+                    <span x-text="!editing ? '{{ $getFullBaseUrl() }}' : '{{ $getBasePath() }}'"></span>
 
                     <a
                         href="#"
@@ -84,17 +84,18 @@
                         title="{{ trans('filament-title-with-slug::package.permalink_action_edit') }}"
                         x-on:click.prevent="initModification()"
                         x-show="!editing"
-                        class="cursor-pointer font-semibold text-gray-950 dark:text-white inline-flex items-center justify-center hover:underline gap-1"
-                        :class="context !== 'create' && modified ? 'text-gray-600 bg-gray-100 dark:text-gray-400 dark:bg-gray-700 px-1 rounded-md' : ''"
+                        class="fts-slug-edit-link"
+                        :class="context !== 'create' && modified ? 'fts-slug-edit-link--modified' : ''"
                     >
-                        <span style="margin-right: 0.25rem;">{{ $getState() }}</span>
+                        <span>{{ $getState() }}</span>
 
                         <x-heroicon-m-pencil-square
                             stroke-width="2"
-                            class="h-4 w-4 text-primary-600 dark:text-primary-400"
+                            class="text-primary-600 dark:text-primary-400"
+                            style="width: 1rem; height: 1rem; flex-shrink: 0;"
                         />
 
-                        <span class="sr-only">{{ trans('filament-title-with-slug::package.permalink_action_edit') }}</span>
+                        <span class="fts-sr-only">{{ trans('filament-title-with-slug::package.permalink_action_edit') }}</span>
                     </a>
 
                     @if($getSlugLabelPostfix())
@@ -104,7 +105,7 @@
                     <span x-show="!editing && context !== 'create' && modified"> [{{ trans('filament-title-with-slug::package.permalink_status_changed') }}]</span>
                 </span>
 
-                <div class="flex-1 mx-2" x-show="editing" style="display: none;">
+                <div class="fts-slug-input-wrapper" x-show="editing" style="display: none;">
                     <input
                         type="text"
                         x-ref="slugInput"
@@ -117,11 +118,11 @@
                         {!! ($placeholder = $getPlaceholder()) ? "placeholder=\"{$placeholder}\"" : null !!}
                         {!! $isRequired() ? 'required' : null !!}
                         {!! $errors->has($getStatePath()) ? 'aria-invalid="true"' : null !!}
-                        {{ $getExtraInputAttributeBag()->class(['fts-slug-input text-sm font-semibold']) }}
+                        {{ $getExtraInputAttributeBag()->class(['fts-slug-input']) }}
                     />
                 </div>
 
-                <div x-show="editing" class="flex gap-2 items-center" style="display: none;">
+                <div class="fts-slug-actions" x-show="editing" style="display: none;">
                     <x-filament::button x-on:click.prevent="submitModification()">
                         {{ trans('filament-title-with-slug::package.permalink_action_ok') }}
                     </x-filament::button>
@@ -147,7 +148,7 @@
                 </div>
 
                 @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
-                    <span class="flex items-center shrink-0">
+                    <span class="fts-slug-visit" x-show="!editing">
                         <template x-if="!editing">
                             <x-filament::link
                                 :href="$getRecordUrl()"
