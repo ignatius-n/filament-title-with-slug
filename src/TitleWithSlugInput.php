@@ -3,6 +3,7 @@
 namespace Blendbyte\FilamentTitleWithSlug;
 
 use Closure;
+use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\FusedGroup;
@@ -17,6 +18,9 @@ class TitleWithSlugInput
         // Model fields
         ?string $fieldTitle = null,
         ?string $fieldSlug = null,
+
+        // Custom title field (replaces the default TextInput)
+        ?Field $titleField = null,
 
         // Url
         string|Closure|null $urlPath = '/',
@@ -51,66 +55,100 @@ class TitleWithSlugInput
         string|Closure $slugRuleRegex = '/^[a-z0-9\-\_]*$/',
         string|Closure|null $slugLabelPostfix = null,
     ): FusedGroup {
-        $fieldTitle = $fieldTitle ?? config('filament-title-with-slug.field_title');
+        $fieldTitle = $fieldTitle ?? $titleField?->getName() ?? config('filament-title-with-slug.field_title');
         $fieldSlug = $fieldSlug ?? config('filament-title-with-slug.field_slug');
         $urlHost = $urlHost ?? config('filament-title-with-slug.url_host');
 
-        /** Input: "Title" */
-        $textInput = TextInput::make($fieldTitle)
-            ->readOnly($titleIsReadonly)
-            ->autofocus($titleAutofocus)
-            ->live(true)
-            ->autocomplete(false)
-            ->rules($titleRules)
-            ->extraInputAttributes($titleExtraInputAttributes ?? ['style' => 'font-size: 1.25rem; font-weight: 600;'])
-            ->beforeStateDehydrated(fn (TextInput $component, $state) => $component->state(trim($state)))
-            ->afterStateUpdated(
-                function (
-                    $state,
-                    Set $set,
-                    Get $get,
-                    string $context,
-                    ?Model $record,
-                    TextInput $component
-                ) use (
-                    $slugSlugifier,
-                    $fieldSlug,
-                    $titleAfterStateUpdated,
-                ) {
-                    $slugAutoUpdateDisabled = $get('slug_auto_update_disabled');
+        if ($titleField !== null) {
+            /** Input: custom title field provided by the caller */
+            $textInput = $titleField
+                ->live(true)
+                ->afterStateUpdated(
+                    function (
+                        $state,
+                        Set $set,
+                        Get $get,
+                        string $context,
+                        ?Model $record,
+                        $component,
+                    ) use (
+                        $slugSlugifier,
+                        $fieldSlug,
+                        $titleAfterStateUpdated,
+                    ) {
+                        $slugAutoUpdateDisabled = $get('slug_auto_update_disabled');
 
-                    if ($context === 'edit' && filled($record)) {
-                        $slugAutoUpdateDisabled = true;
+                        if ($context === 'edit' && filled($record)) {
+                            $slugAutoUpdateDisabled = true;
+                        }
+
+                        if (! $slugAutoUpdateDisabled && filled($state)) {
+                            $set($fieldSlug, self::slugify($slugSlugifier, $state));
+                        }
+
+                        if ($titleAfterStateUpdated) {
+                            $component->evaluate($titleAfterStateUpdated);
+                        }
                     }
+                );
+        } else {
+            /** Input: "Title" (default TextInput) */
+            $textInput = TextInput::make($fieldTitle)
+                ->readOnly($titleIsReadonly)
+                ->autofocus($titleAutofocus)
+                ->live(true)
+                ->autocomplete(false)
+                ->rules($titleRules)
+                ->extraInputAttributes($titleExtraInputAttributes ?? ['style' => 'font-size: 1.25rem; font-weight: 600;'])
+                ->beforeStateDehydrated(fn (TextInput $component, $state) => $component->state(trim($state)))
+                ->afterStateUpdated(
+                    function (
+                        $state,
+                        Set $set,
+                        Get $get,
+                        string $context,
+                        ?Model $record,
+                        TextInput $component,
+                    ) use (
+                        $slugSlugifier,
+                        $fieldSlug,
+                        $titleAfterStateUpdated,
+                    ) {
+                        $slugAutoUpdateDisabled = $get('slug_auto_update_disabled');
 
-                    if (! $slugAutoUpdateDisabled && filled($state)) {
-                        $set($fieldSlug, self::slugify($slugSlugifier, $state));
+                        if ($context === 'edit' && filled($record)) {
+                            $slugAutoUpdateDisabled = true;
+                        }
+
+                        if (! $slugAutoUpdateDisabled && filled($state)) {
+                            $set($fieldSlug, self::slugify($slugSlugifier, $state));
+                        }
+
+                        if ($titleAfterStateUpdated) {
+                            $component->evaluate($titleAfterStateUpdated);
+                        }
                     }
+                );
 
-                    if ($titleAfterStateUpdated) {
-                        $component->evaluate($titleAfterStateUpdated);
-                    }
-                }
-            );
+            if (in_array('required', $titleRules, true)) {
+                $textInput->required();
+            }
 
-        if (in_array('required', $titleRules, true)) {
-            $textInput->required();
-        }
+            if ($titlePlaceholder !== '') {
+                $textInput->placeholder($titlePlaceholder ?: fn () => Str::of($fieldTitle)->headline());
+            }
 
-        if ($titlePlaceholder !== '') {
-            $textInput->placeholder($titlePlaceholder ?: fn () => Str::of($fieldTitle)->headline());
-        }
+            if (! $titleLabel) {
+                $textInput->hiddenLabel();
+            }
 
-        if (! $titleLabel) {
-            $textInput->hiddenLabel();
-        }
+            if ($titleLabel) {
+                $textInput->label($titleLabel);
+            }
 
-        if ($titleLabel) {
-            $textInput->label($titleLabel);
-        }
-
-        if ($titleRuleUniqueParameters) {
-            $textInput->unique(...$titleRuleUniqueParameters);
+            if ($titleRuleUniqueParameters) {
+                $textInput->unique(...$titleRuleUniqueParameters);
+            }
         }
 
         /** Input: "Slug" (+ view) */
@@ -145,7 +183,7 @@ class TitleWithSlugInput
                     $state,
                     Set $set,
                     Get $get,
-                    TextInput $component
+                    TextInput $component,
                 ) use (
                     $slugSlugifier,
                     $fieldTitle,

@@ -332,4 +332,145 @@ describe('auto-slug generation', function () {
             ->set('data.slug', 'any-value')
             ->assertSet('data.slug', $sentinel);
     });
+
+    it('auto-generates slug when a custom titleField is used', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                titleField: \Filament\Forms\Components\TextInput::make('title'),
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->set('data.title', 'Hello World')
+            ->assertSet('data.slug', 'hello-world');
+    });
+
+    it('derives fieldTitle from custom titleField name', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                titleField: \Filament\Forms\Components\TextInput::make('name'),
+                fieldSlug: 'handle',
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->set('data.name', 'My Page')
+            ->assertSet('data.handle', 'my-page');
+    });
+
+    it('does not auto-update slug in edit context when using a custom titleField', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                titleField: \Filament\Forms\Components\TextInput::make('title'),
+            ),
+        ];
+
+        Livewire::test(TestableForm::class, [
+            'record' => new Record(['title' => 'Original Title', 'slug' => 'original-slug']),
+        ])
+            ->set('data.title', 'Updated Title')
+            ->assertSet('data.slug', 'original-slug');
+    });
+
+    it('fires titleAfterStateUpdated callback when using a custom titleField', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                titleField: \Filament\Forms\Components\TextInput::make('title'),
+                titleAfterStateUpdated: function (Set $set) {
+                    $set('slug', 'custom-field-callback-ran');
+                },
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->set('data.title', 'Trigger')
+            ->assertSet('data.slug', 'custom-field-callback-ran');
+    });
+
+    it('applies a custom slugifier when using a custom titleField', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                titleField: \Filament\Forms\Components\TextInput::make('title'),
+                slugSlugifier: fn (string $value) => strtoupper(Str::slug($value)),
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->set('data.title', 'hello world')
+            ->assertSet('data.slug', 'HELLO-WORLD');
+    });
+
+    it('respects explicit fieldTitle when used alongside a custom titleField', function () {
+        // fieldTitle should override the getName() derivation, and the slug
+        // re-gen ($get($fieldTitle)) must use the explicit name too.
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                fieldTitle: 'name',
+                fieldSlug: 'handle',
+                titleField: \Filament\Forms\Components\TextInput::make('name'),
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->set('data.name', 'My Page')
+            ->assertSet('data.handle', 'my-page');
+    });
+});
+
+// ---------------------------------------------------------------------------
+// titleFieldWrapper
+// ---------------------------------------------------------------------------
+
+describe('titleFieldWrapper', function () {
+    it('passes the title field to the wrapper and uses the returned component', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                titleFieldWrapper: fn ($field) => $field->label('*Wrapper Applied*'),
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->assertSee('*Wrapper Applied*');
+    });
+
+    it('slug still auto-generates after the title field is wrapped', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                titleFieldWrapper: fn ($field) => $field->label('Wrapped'),
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->set('data.title', 'Hello World')
+            ->assertSet('data.slug', 'hello-world');
+    });
+
+    it('applies the wrapper to a custom titleField', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                titleField: \Filament\Forms\Components\TextInput::make('title'),
+                titleFieldWrapper: fn ($field) => $field->label('*Custom Wrapped*'),
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->assertSee('*Custom Wrapped*');
+    });
+});
+
+// ---------------------------------------------------------------------------
+// titleExtraInputAttributes
+// ---------------------------------------------------------------------------
+
+describe('titleExtraInputAttributes', function () {
+    it('applies custom extra input attributes to the title input', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                titleExtraInputAttributes: ['style' => 'color: red;', 'data-testid' => 'custom-title'],
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->assertSeeHtml('data-testid="custom-title"');
+    });
 });
