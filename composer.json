@@ -7,8 +7,7 @@
         "filament",
         "slug",
         "permalink",
-        "livewire",
-        "alpinejs",
+        "livewire"
     ],
     "homepage": "https://github.com/blendbyte/filament-title-with-slug",
     "license": "MIT",
