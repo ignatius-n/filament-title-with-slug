@@ -1,26 +1,26 @@
 <x-dynamic-component
     :component="$getFieldWrapperView()"
     :field="$field"
-    class="-mt-3 filament-seo-slug-input-wrapper"
+    class="filament-seo-slug-input-wrapper"
 >
     @if($getSlugReadOnly())
         <div
-            {{ $attributes->merge($getExtraAttributes())->class(['flex gap-4 items-center justify-between group text-sm filament-forms-text-input-component']) }}
+            {{ $attributes->merge($getExtraAttributes())->class(['fi-input-wrp px-3 py-2 text-sm']) }}
         >
-            <span class="flex">
-                <span class="mr-1">{{ $getLabelPrefix() }}</span>
-                <span class="text-gray-400">{{ $getFullBaseUrl() }}</span>
-                <span class="text-gray-400 font-semibold">{{ $getState() }}</span>
+            <span class="flex items-center gap-1 flex-1 min-w-0 text-gray-500 dark:text-gray-400">
+                <span class="shrink-0">{{ $getLabelPrefix() }}</span>
+                <span class="shrink-0">{{ $getFullBaseUrl() }}</span>
+                <span class="font-semibold text-gray-950 dark:text-white truncate">{{ $getState() }}</span>
             </span>
 
             @if($getSlugInputUrlVisitLinkVisible())
                 <x-filament::link
-                        :href="$getRecordUrl()"
-                        target="_blank"
-                        size="sm"
-                        icon="heroicon-m-arrow-top-right-on-square"
-                        icon-position="after"
-                    >
+                    :href="$getRecordUrl()"
+                    target="_blank"
+                    size="sm"
+                    icon="heroicon-m-arrow-top-right-on-square"
+                    icon-position="after"
+                >
                     {{ $getVisitLinkLabel() }}
                 </x-filament::link>
             @endif
@@ -28,10 +28,10 @@
     @else
         <div
             x-data="{
-                context: '{{ $getContext() }}', // edit or create
-                state: $wire.entangle('{{ $getStatePath() }}'), // current slug value
-                statePersisted: '', // slug value received from db
-                stateInitial: '', // slug value before modification
+                context: '{{ $getContext() }}',
+                state: $wire.entangle('{{ $getStatePath() }}'),
+                statePersisted: '',
+                stateInitial: '',
                 editing: false,
                 modified: false,
                 initModification: function() {
@@ -73,10 +73,10 @@
             x-on:submit.document="modified = false"
         >
             <div
-                {{ $attributes->merge($getExtraAttributes())->class(['flex gap-4 items-center justify-between group text-sm filament-forms-text-input-component']) }}
+                {{ $attributes->merge($getExtraAttributes())->class(['fi-input-wrp px-3 py-2 text-sm items-center justify-between gap-4']) }}
             >
                 <span
-                     class="
+                    class="flex items-center gap-1 text-gray-500 dark:text-gray-400
                         @if(!$getState()) flex items-center gap-1 @endif
                     "
                 >
@@ -84,7 +84,6 @@
 
                     <span
                         x-text="!editing ? '{{ $getFullBaseUrl() }}' : '{{ $getBasePath() }}'"
-                        class="text-gray-400"
                     ></span>
 
                     <a
@@ -95,10 +94,9 @@
                         x-show="!editing"
                         class="
                             cursor-pointer
-                            font-semibold text-gray-400
+                            font-semibold text-gray-950 dark:text-white
                             inline-flex items-center justify-center
-                            hover:underline hover:text-primary-500
-                            dark:hover:text-primary-400
+                            hover:underline
                             gap-1
                         "
                         :class="context !== 'create' && modified ? 'text-gray-600 bg-gray-100 dark:text-gray-400 dark:bg-gray-700 px-1 rounded-md' : ''"
@@ -107,10 +105,7 @@
 
                         <x-heroicon-m-pencil-square
                             stroke-width="2"
-                            class="
-                                h-4 w-4
-                                text-primary-600 dark:text-primary-400
-                            "
+                            class="h-4 w-4 text-primary-600 dark:text-primary-400"
                         />
 
                         <span class="sr-only">{{ trans('filament-title-with-slug::package.permalink_action_edit') }}</span>
@@ -119,7 +114,7 @@
                     @if($getSlugLabelPostfix())
                         <span
                             x-show="!editing"
-                            class="ml-0.5 text-gray-400"
+                            class="ml-0.5"
                         >{{ $getSlugLabelPostfix() }}</span>
                     @endif
 
@@ -178,7 +173,7 @@
                 </div>
 
                 @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
-                    <span class="flex items-center space-x-2">
+                    <span class="flex items-center space-x-2 shrink-0">
                         <template x-if="!editing">
                             <x-filament::link
                                 :href="$getRecordUrl()"
