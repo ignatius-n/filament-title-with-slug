@@ -1,13 +1,13 @@
 <?php
 
-namespace Camya\Filament\Tests;
+namespace Blendbyte\FilamentTitleWithSlug\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
-use Camya\Filament\FilamentTitleWithSlugServiceProvider;
+use Blendbyte\FilamentTitleWithSlug\FilamentTitleWithSlugServiceProvider;
 use Filament\FilamentServiceProvider;
-// TODO: verify Filament 5 provider list after `composer install` — FormsServiceProvider may be merged into FilamentServiceProvider
 use Filament\Forms\FormsServiceProvider;
+use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -26,6 +26,7 @@ class TestCase extends Orchestra
             FilamentServiceProvider::class,
             LivewireServiceProvider::class,
             FormsServiceProvider::class,
+            SchemasServiceProvider::class,
             SupportServiceProvider::class,
             BladeIconsServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
