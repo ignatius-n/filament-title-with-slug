@@ -1,4 +1,4 @@
-<img width="2560" height="1440" alt="filament-title-with-slug-banner" src="https://github.com/user-attachments/assets/61ac4405-14e3-43ef-a36b-4ec591e228b7" />
+<img class="filament-hidden" width="2560" height="1440" alt="filament-title-with-slug-banner" src="https://github.com/user-attachments/assets/61ac4405-14e3-43ef-a36b-4ec591e228b7" />
 
 # Title With Slug — Permalink Field for Filament v5
 
