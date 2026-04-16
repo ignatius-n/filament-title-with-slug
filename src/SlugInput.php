@@ -204,6 +204,7 @@ class SlugInput extends TextInput
         return $this->evaluate($this->basePath);
     }
 
+    /** @return view-string */
     public function getView(): string
     {
         return 'filament-title-with-slug::forms.fields.slug-input';
