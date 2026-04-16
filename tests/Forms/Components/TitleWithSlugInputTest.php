@@ -29,7 +29,7 @@ it('fills view correctly with default component parameters', function () {
 
     $component
         ->assertSeeHtml('wire:model.blur="data.title"')
-        ->assertSeeHtml('id="data.slug"')
+        ->assertSeeHtml('id="form.slug"')
         ->assertSet('data.title', 'Persisted Title')
         ->assertSet('data.slug', 'persisted-slug')
         ->assertSeeHtml('<span class="mr-1">persisted-slug</span>');
@@ -55,7 +55,7 @@ it('fills view correctly with overwritten component parameters', function () {
 
     $component
         ->assertSeeHtml('wire:model.blur="data.TitleFieldName"')
-        ->assertSeeHtml('id="data.SlugFieldName"')
+        ->assertSeeHtml('id="form.SlugFieldName"')
         ->assertSee('*Title Label*')
         ->assertSee('*Slug Label*')
         ->assertSee('*Visit Link Label*')
@@ -141,3 +141,4 @@ it('allows generating a URL with an empty slug, if slug has no required rule.', 
     $component
         ->assertSeeHtml("!editing ? 'https://www.camya.com/' : '/'");
 });
+

@@ -554,7 +554,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-This is a fork from ```camya/filament-title-with-slug```, updated to work with Filament v3.0.
+This is a fork from ```camya/filament-title-with-slug```, updated to work with Filament v4.0.
 
 - [Andreas Scheibel (camya)](https://github.com/camya) (Developer at  [camya.com](https://www.camya.com)
   / [epicbundle.com](https://www.epicbundle.com))

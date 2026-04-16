@@ -7,6 +7,7 @@ use BladeUI\Icons\BladeIconsServiceProvider;
 use Camya\Filament\FilamentTitleWithSlugServiceProvider;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
+use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -21,13 +22,14 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            FilamentTitleWithSlugServiceProvider::class,
-            FilamentServiceProvider::class,
-            LivewireServiceProvider::class,
-            FormsServiceProvider::class,
-            SupportServiceProvider::class,
             BladeIconsServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
+            SupportServiceProvider::class,
+            LivewireServiceProvider::class,
+            FormsServiceProvider::class,
+            SchemasServiceProvider::class,
+            FilamentServiceProvider::class,
+            FilamentTitleWithSlugServiceProvider::class,
         ];
     }
 

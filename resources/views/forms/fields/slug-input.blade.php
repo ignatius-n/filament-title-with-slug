@@ -1,18 +1,17 @@
-<x-filament-forms::field-wrapper
-    :id="$getId()"
-    :label="$getLabel()"
-    :label-sr-only="$isLabelHidden()"
-    :helper-text="$getHelperText()"
-    :hint="$getHint()"
-    :hint-icon="$getHintIcon()"
-    :required="$isRequired()"
-    :state-path="$getStatePath()"
+@php
+    $fieldWrapperView = $getFieldWrapperView();
+    $statePath = $getStatePath();
+@endphp
+
+<x-dynamic-component
+    :component="$fieldWrapperView"
+    :field="$field"
     class="-mt-3 filament-seo-slug-input-wrapper"
 >
     <div
         x-data="{
             context: '{{ $getContext() }}', // edit or create
-            state: $wire.entangle('{{ $getStatePath() }}'), // current slug value
+            state: $wire.entangle('{{ $statePath }}'), // current slug value
             statePersisted: '', // slug value received from db
             stateInitial: '', // slug value before modification
             editing: false,
@@ -37,7 +36,7 @@
                     this.state = this.stateInitial;
                 }
 
-                $wire.set('{{ $getStatePath() }}', this.state)
+                $wire.set('{{ $statePath }}', this.state)
                 this.detectModification();
                 this.editing = false;
            },
@@ -149,7 +148,7 @@
                                 {!! $isRequired() ? 'required' : null !!}
                                 {{ $getExtraInputAttributeBag()->class([
                                     'fi-input text-sm font-semibold',
-                                    'border-danger-600 ring-danger-600' => $errors->has($getStatePath())])
+                                    'fi-invalid' => $errors->has($statePath)])
                                 }}
                             />
                         </div>
@@ -206,4 +205,4 @@
             @endif
         </div>
     </div>
-</x-filament-forms::field-wrapper>
+</x-dynamic-component>
