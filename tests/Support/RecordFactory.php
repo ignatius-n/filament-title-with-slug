@@ -1,6 +1,6 @@
 <?php
 
-namespace Camya\Filament\Tests\Support;
+namespace Blendbyte\FilamentTitleWithSlug\Tests\Support;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

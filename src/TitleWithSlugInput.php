@@ -1,12 +1,11 @@
 <?php
 
-namespace Camya\Filament\Forms\Components;
+namespace Blendbyte\FilamentTitleWithSlug;
 
-use Camya\Filament\Forms\Fields\SlugInput;
 use Closure;
-use Filament\Schemas\Components\FusedGroup;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\FusedGroup;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Illuminate\Database\Eloquent\Model;
@@ -183,8 +182,6 @@ class TitleWithSlugInput
         if ($titleFieldWrapper) {
             $textInput = $titleFieldWrapper($textInput);
         }
-
-        /** Group */
 
         return FusedGroup::make()
             ->schema([

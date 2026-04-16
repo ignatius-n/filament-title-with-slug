@@ -1,6 +1,6 @@
 <?php
 
-namespace Camya\Filament\Forms\Fields;
+namespace Blendbyte\FilamentTitleWithSlug;
 
 use Closure;
 use Filament\Forms\Components\TextInput;
@@ -160,7 +160,7 @@ class SlugInput extends TextInput
 
         return $visitLinkRoute
             ? $this->getVisitLinkRoute()
-            : $this->getBaseUrl().$this->getBasePath().$this->evaluate($this->recordSlug);
+            : $this->getFullBaseUrl().$this->evaluate($this->recordSlug);
     }
 
     public function slugInputBasePath(string|Closure|null $path): static
