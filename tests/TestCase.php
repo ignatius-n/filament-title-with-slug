@@ -6,6 +6,7 @@ use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
 use Camya\Filament\FilamentTitleWithSlugServiceProvider;
 use Filament\FilamentServiceProvider;
+// TODO: verify Filament 5 provider list after `composer install` — FormsServiceProvider may be merged into FilamentServiceProvider
 use Filament\Forms\FormsServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Livewire\LivewireServiceProvider;

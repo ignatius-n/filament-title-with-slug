@@ -1,3 +1,4 @@
+{{-- TODO(fila5): verify component alias — may be <x-filament::field-wrapper> in Filament 5 --}}
 <x-filament-forms::field-wrapper
     :id="$getId()"
     :label="$getLabel()"
@@ -59,7 +60,7 @@
         <div
             {{ $attributes->merge($getExtraAttributes())->class(['flex gap-4 items-center justify-between group text-sm filament-forms-text-input-component']) }}
         >
-            @if($getReadOnly())
+            @if($getSlugReadOnly())
                 <span class="flex">
                     <span class="mr-1">{{ $getLabelPrefix() }}</span>
                     <span class="text-gray-400">{{ $getFullBaseUrl() }}</span>
@@ -134,6 +135,7 @@
                     x-show="editing"
                     style="display: none;"
                 >
+                    {{-- TODO(fila5): verify CSS class names fi-input-wrp / fi-input-wrp-content-ctn against Filament 5 TextInput view --}}
                     <div class="fi-input-wrp">
                         <div class="fi-input-wrp-content-ctn">
                             <input
