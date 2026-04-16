@@ -16,41 +16,41 @@ class TitleWithSlugInput
 {
     public static function make(
         // Model fields
-        string $fieldTitle = null,
-        string $fieldSlug = null,
+        ?string $fieldTitle = null,
+        ?string $fieldSlug = null,
 
         // Url
         string|Closure|null $urlPath = '/',
-        string|Closure $urlHost = null,
+        string|Closure|null $urlHost = null,
         bool $urlHostVisible = true,
         bool|Closure $urlVisitLinkVisible = true,
-        Closure|string $urlVisitLinkLabel = null,
-        Closure $urlVisitLinkRoute = null,
+        Closure|string|null $urlVisitLinkLabel = null,
+        ?Closure $urlVisitLinkRoute = null,
 
         // Title
-        string|Closure $titleLabel = null,
-        string $titlePlaceholder = null,
-        array|Closure $titleExtraInputAttributes = null,
+        string|Closure|null $titleLabel = null,
+        ?string $titlePlaceholder = null,
+        array|Closure|null $titleExtraInputAttributes = null,
         array $titleRules = [
             'required',
         ],
         array $titleRuleUniqueParameters = [],
         bool|Closure $titleIsReadonly = false,
         bool|Closure $titleAutofocus = true,
-        Closure $titleAfterStateUpdated = null,
-        Closure $titleFieldWrapper = null,
+        ?Closure $titleAfterStateUpdated = null,
+        ?Closure $titleFieldWrapper = null,
 
         // Slug
-        string $slugLabel = null,
+        ?string $slugLabel = null,
         array $slugRules = [
             'required',
         ],
         array $slugRuleUniqueParameters = [],
         bool|Closure $slugIsReadonly = false,
-        Closure $slugAfterStateUpdated = null,
-        Closure $slugSlugifier = null,
+        ?Closure $slugAfterStateUpdated = null,
+        ?Closure $slugSlugifier = null,
         string|Closure $slugRuleRegex = '/^[a-z0-9\-\_]*$/',
-        string|Closure $slugLabelPostfix = null,
+        string|Closure|null $slugLabelPostfix = null,
     ): FusedGroup {
         $fieldTitle = $fieldTitle ?? config('filament-title-with-slug.field_title');
         $fieldSlug = $fieldSlug ?? config('filament-title-with-slug.field_slug');
@@ -58,7 +58,7 @@ class TitleWithSlugInput
 
         /** Input: "Title" */
         $textInput = TextInput::make($fieldTitle)
-            ->disabled($titleIsReadonly)
+            ->readOnly($titleIsReadonly)
             ->autofocus($titleAutofocus)
             ->live(true)
             ->autocomplete(false)
@@ -135,7 +135,7 @@ class TitleWithSlugInput
             ->slugInputSlugLabelPostfix($slugLabelPostfix)
 
             // Default TextInput methods
-            ->readOnly($slugIsReadonly)
+            ->slugReadOnly($slugIsReadonly)
             ->live(true)
             ->autocomplete(false)
             ->disableLabel()

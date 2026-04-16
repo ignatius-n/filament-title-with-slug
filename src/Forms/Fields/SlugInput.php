@@ -16,15 +16,13 @@ class SlugInput extends TextInput
 
     protected string|Closure|null $baseUrl = null;
 
-    protected string|null $helperText = null;
-
     protected bool $showUrl = true;
 
     protected bool $cancelled = false;
 
     protected Closure $recordSlug;
 
-    protected bool|Closure $readOnly = false;
+    protected bool|Closure $slugReadOnly = false;
 
     protected string $labelPrefix;
 
@@ -104,16 +102,16 @@ class SlugInput extends TextInput
         return $this->evaluate($this->labelPrefix);
     }
 
-    public function readOnly(Closure|bool $condition = true): static
+    public function slugReadOnly(Closure|bool $condition = true): static
     {
-        $this->readOnly = $condition;
+        $this->slugReadOnly = $condition;
 
         return $this;
     }
 
-    public function getReadOnly(): bool
+    public function getSlugReadOnly(): bool
     {
-        return $this->evaluate($this->readOnly);
+        return $this->evaluate($this->slugReadOnly);
     }
 
     public function slugInputContext(string|Closure|null $context): static
@@ -189,11 +187,6 @@ class SlugInput extends TextInput
         $this->showUrl = $showUrl;
 
         return $this;
-    }
-
-    public function getHelperText(): ?string
-    {
-        return $this->helperText;
     }
 
     public function getShowUrl(): ?bool
