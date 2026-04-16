@@ -186,8 +186,8 @@ class TitleWithSlugInput
         return FusedGroup::make()
             ->schema([
                 $textInput,
-                $slugInput,
                 $hiddenInputSlugAutoUpdateDisabled,
+                $slugInput,
             ]);
     }
 
