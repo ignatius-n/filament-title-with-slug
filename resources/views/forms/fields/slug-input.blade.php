@@ -4,9 +4,7 @@
     class="filament-seo-slug-input-wrapper"
 >
     @if($getSlugReadOnly())
-        <div
-            {{ $attributes->merge($getExtraAttributes())->class(['fi-input-wrp px-3 py-2 text-sm']) }}
-        >
+        <div class="fi-input-wrp flex items-center justify-between gap-4 px-3 py-2 text-sm">
             <span class="flex items-center gap-1 flex-1 min-w-0 text-gray-500 dark:text-gray-400">
                 <span class="shrink-0">{{ $getLabelPrefix() }}</span>
                 <span class="shrink-0">{{ $getFullBaseUrl() }}</span>
@@ -72,14 +70,8 @@
             }"
             x-on:submit.document="modified = false"
         >
-            <div
-                {{ $attributes->merge($getExtraAttributes())->class(['fi-input-wrp px-3 py-2 text-sm items-center justify-between gap-4']) }}
-            >
-                <span
-                    class="flex items-center gap-1 text-gray-500 dark:text-gray-400
-                        @if(!$getState()) flex items-center gap-1 @endif
-                    "
-                >
+            <div class="fi-input-wrp flex items-center justify-between gap-4 px-3 py-2 text-sm">
+                <span class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
                     <span>{{ $getLabelPrefix() }}</span>
 
                     <span
@@ -92,13 +84,7 @@
                         title="{{ trans('filament-title-with-slug::package.permalink_action_edit') }}"
                         x-on:click.prevent="initModification()"
                         x-show="!editing"
-                        class="
-                            cursor-pointer
-                            font-semibold text-gray-950 dark:text-white
-                            inline-flex items-center justify-center
-                            hover:underline
-                            gap-1
-                        "
+                        class="cursor-pointer font-semibold text-gray-950 dark:text-white inline-flex items-center justify-center hover:underline gap-1"
                         :class="context !== 'create' && modified ? 'text-gray-600 bg-gray-100 dark:text-gray-400 dark:bg-gray-700 px-1 rounded-md' : ''"
                     >
                         <span class="mr-1">{{ $getState() }}</span>
@@ -112,20 +98,13 @@
                     </a>
 
                     @if($getSlugLabelPostfix())
-                        <span
-                            x-show="!editing"
-                            class="ml-0.5"
-                        >{{ $getSlugLabelPostfix() }}</span>
+                        <span x-show="!editing" class="ml-0.5">{{ $getSlugLabelPostfix() }}</span>
                     @endif
 
                     <span x-show="!editing && context !== 'create' && modified"> [{{ trans('filament-title-with-slug::package.permalink_status_changed') }}]</span>
                 </span>
 
-                <div
-                    class="flex-1 mx-2"
-                    x-show="editing"
-                    style="display: none;"
-                >
+                <div class="flex-1 mx-2" x-show="editing" style="display: none;">
                     <x-filament::input.wrapper :valid="! $errors->has($getStatePath())">
                         <x-filament::input
                             type="text"
@@ -143,11 +122,7 @@
                     </x-filament::input.wrapper>
                 </div>
 
-                <div
-                    x-show="editing"
-                    class="flex gap-2 items-center"
-                    style="display: none;"
-                >
+                <div x-show="editing" class="flex gap-2 items-center" style="display: none;">
                     <x-filament::button x-on:click.prevent="submitModification()">
                         {{ trans('filament-title-with-slug::package.permalink_action_ok') }}
                     </x-filament::button>
