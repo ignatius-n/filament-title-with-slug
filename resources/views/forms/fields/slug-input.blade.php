@@ -4,7 +4,7 @@
     class="filament-seo-slug-input-wrapper"
 >
     @if($getSlugReadOnly())
-        <div class="fi-input-wrp flex items-center justify-between gap-4 px-3 py-2 text-sm">
+        <div class="fi-input-wrp flex items-center justify-between gap-4 px-3 py-1.5 leading-6 text-sm">
             <span class="flex items-center gap-1 flex-1 min-w-0 text-gray-500 dark:text-gray-400">
                 <span class="shrink-0">{{ $getLabelPrefix() }}</span>
                 <span class="shrink-0">{{ $getFullBaseUrl() }}</span>
@@ -70,7 +70,7 @@
             }"
             x-on:submit.document="modified = false"
         >
-            <div class="fi-input-wrp flex items-center justify-between gap-4 px-3 py-2 text-sm">
+            <div class="fi-input-wrp flex items-center justify-between gap-4 px-3 py-1.5 leading-6 text-sm">
                 <span class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
                     <span>{{ $getLabelPrefix() }}</span>
 
