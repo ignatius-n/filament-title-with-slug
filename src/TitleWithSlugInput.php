@@ -137,7 +137,7 @@ class TitleWithSlugInput
             ->slugReadOnly($slugIsReadonly)
             ->live(true)
             ->autocomplete(false)
-            ->disableLabel()
+            ->hiddenLabel()
             ->regex($slugRuleRegex)
             ->rules($slugRules)
             ->afterStateUpdated(
