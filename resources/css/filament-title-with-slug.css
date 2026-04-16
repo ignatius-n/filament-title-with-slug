@@ -3,3 +3,18 @@
 @source "../views/**/*.blade.php";
 
 @custom-variant dark (&:is(.dark *));
+
+/* Restore input wrapper ring inside the slug editing row.
+   FusedGroup strips ring-0 from ALL fi-input-wrp descendants, including
+   the nested one rendered by <x-filament::input.wrapper> in edit mode. */
+.filament-seo-slug-input-wrapper .fi-input-wrp .fi-input-wrp {
+    box-shadow: var(--shadow-sm);
+    --tw-ring-color: color-mix(in oklab, var(--color-gray-950) 10%, transparent);
+    --tw-ring-shadow: inset 0 0 0 1px var(--tw-ring-color);
+    box-shadow: var(--tw-ring-shadow), var(--shadow-sm, 0 0 #0000);
+    border-radius: var(--radius-lg);
+}
+
+.dark .filament-seo-slug-input-wrapper .fi-input-wrp .fi-input-wrp {
+    --tw-ring-color: color-mix(in oklab, white 20%, transparent);
+}
