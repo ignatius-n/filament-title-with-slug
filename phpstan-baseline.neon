@@ -1,7 +1,0 @@
-parameters:
-	ignoreErrors:
-		-
-			message: '#^Method Blendbyte\\FilamentTitleWithSlug\\SlugInput\:\:getView\(\) should return view\-string but returns string\.$#'
-			identifier: return.type
-			count: 1
-			path: src/SlugInput.php
