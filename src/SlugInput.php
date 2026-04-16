@@ -8,7 +8,10 @@ use Illuminate\Support\Str;
 
 class SlugInput extends TextInput
 {
-    protected string $view = 'filament-title-with-slug::forms.fields.slug-input';
+    public function getView(): string
+    {
+        return 'filament-title-with-slug::forms.fields.slug-input';
+    }
 
     protected string|Closure|null $context = null;
 
