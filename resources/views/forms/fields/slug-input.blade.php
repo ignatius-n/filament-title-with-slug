@@ -87,7 +87,7 @@
                         class="cursor-pointer font-semibold text-gray-950 dark:text-white inline-flex items-center justify-center hover:underline gap-1"
                         :class="context !== 'create' && modified ? 'text-gray-600 bg-gray-100 dark:text-gray-400 dark:bg-gray-700 px-1 rounded-md' : ''"
                     >
-                        <span class="mr-1">{{ $getState() }}</span>
+                        <span style="margin-right: 0.25rem;">{{ $getState() }}</span>
 
                         <x-heroicon-m-pencil-square
                             stroke-width="2"
@@ -98,28 +98,27 @@
                     </a>
 
                     @if($getSlugLabelPostfix())
-                        <span x-show="!editing" class="ml-0.5">{{ $getSlugLabelPostfix() }}</span>
+                        <span x-show="!editing" style="margin-left: 0.125rem;">{{ $getSlugLabelPostfix() }}</span>
                     @endif
 
                     <span x-show="!editing && context !== 'create' && modified"> [{{ trans('filament-title-with-slug::package.permalink_status_changed') }}]</span>
                 </span>
 
                 <div class="flex-1 mx-2" x-show="editing" style="display: none;">
-                    <x-filament::input.wrapper :valid="! $errors->has($getStatePath())">
-                        <x-filament::input
-                            type="text"
-                            x-ref="slugInput"
-                            x-model="stateInitial"
-                            x-bind:disabled="!editing"
-                            x-on:keydown.enter="submitModification()"
-                            x-on:keydown.escape="cancelModification()"
-                            {!! ($autocomplete = $getAutocomplete()) ? "autocomplete=\"{$autocomplete}\"" : null !!}
-                            id="{{ $getId() }}"
-                            {!! ($placeholder = $getPlaceholder()) ? "placeholder=\"{$placeholder}\"" : null !!}
-                            {!! $isRequired() ? 'required' : null !!}
-                            {{ $getExtraInputAttributeBag()->class(['fi-input text-sm font-semibold']) }}
-                        />
-                    </x-filament::input.wrapper>
+                    <input
+                        type="text"
+                        x-ref="slugInput"
+                        x-model="stateInitial"
+                        x-bind:disabled="!editing"
+                        x-on:keydown.enter="submitModification()"
+                        x-on:keydown.escape="cancelModification()"
+                        {!! ($autocomplete = $getAutocomplete()) ? "autocomplete=\"{$autocomplete}\"" : null !!}
+                        id="{{ $getId() }}"
+                        {!! ($placeholder = $getPlaceholder()) ? "placeholder=\"{$placeholder}\"" : null !!}
+                        {!! $isRequired() ? 'required' : null !!}
+                        {!! $errors->has($getStatePath()) ? 'aria-invalid="true"' : null !!}
+                        {{ $getExtraInputAttributeBag()->class(['fts-slug-input text-sm font-semibold']) }}
+                    />
                 </div>
 
                 <div x-show="editing" class="flex gap-2 items-center" style="display: none;">
@@ -148,7 +147,7 @@
                 </div>
 
                 @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
-                    <span class="flex items-center space-x-2 shrink-0">
+                    <span class="flex items-center shrink-0">
                         <template x-if="!editing">
                             <x-filament::link
                                 :href="$getRecordUrl()"
