@@ -1,84 +1,80 @@
-{{-- TODO(fila5): verify component alias — may be <x-filament::field-wrapper> in Filament 5 --}}
-<x-filament-forms::field-wrapper
-    :id="$getId()"
-    :label="$getLabel()"
-    :label-sr-only="$isLabelHidden()"
-    :helper-text="$getHelperText()"
-    :hint="$getHint()"
-    :hint-icon="$getHintIcon()"
-    :required="$isRequired()"
-    :state-path="$getStatePath()"
+<x-dynamic-component
+    :component="$getFieldWrapperView()"
+    :field="$field"
     class="-mt-3 filament-seo-slug-input-wrapper"
 >
-    <div
-        x-data="{
-            context: '{{ $getContext() }}', // edit or create
-            state: $wire.entangle('{{ $getStatePath() }}'), // current slug value
-            statePersisted: '', // slug value received from db
-            stateInitial: '', // slug value before modification
-            editing: false,
-            modified: false,
-            initModification: function() {
-                this.stateInitial = this.state;
-
-                if(!this.statePersisted) {
-                    this.statePersisted = this.state;
-                }
-
-                this.editing = true;
-
-                setTimeout(() => $refs.slugInput.focus(), 75);
-                {{--$nextTick(() => $refs.slugInput.focus());--}}
-            },
-            submitModification: function() {
-                if(!this.stateInitial) {
-                    this.state = '';
-                }
-                else {
-                    this.state = this.stateInitial;
-                }
-
-                $wire.set('{{ $getStatePath() }}', this.state)
-                this.detectModification();
-                this.editing = false;
-           },
-           cancelModification: function() {
-                this.stateInitial = this.state;
-                this.detectModification();
-                this.editing = false;
-           },
-           resetModification: function() {
-                this.stateInitial = this.statePersisted;
-                this.detectModification();
-           },
-           detectModification: function() {
-                this.modified = this.stateInitial !== this.statePersisted;
-           },
-        }"
-        x-on:submit.document="modified = false"
-    >
+    @if($getSlugReadOnly())
         <div
             {{ $attributes->merge($getExtraAttributes())->class(['flex gap-4 items-center justify-between group text-sm filament-forms-text-input-component']) }}
         >
-            @if($getSlugReadOnly())
-                <span class="flex">
-                    <span class="mr-1">{{ $getLabelPrefix() }}</span>
-                    <span class="text-gray-400">{{ $getFullBaseUrl() }}</span>
-                    <span class="text-gray-400 font-semibold">{{ $getState() }}</span>
-                </span>
+            <span class="flex">
+                <span class="mr-1">{{ $getLabelPrefix() }}</span>
+                <span class="text-gray-400">{{ $getFullBaseUrl() }}</span>
+                <span class="text-gray-400 font-semibold">{{ $getState() }}</span>
+            </span>
 
-                @if($getSlugInputUrlVisitLinkVisible())
-                    <x-filament::link
-                            :href="$getRecordUrl()"
-                            target="_blank"
-                            size="sm"
-                            icon="heroicon-m-arrow-top-right-on-square"
-                            icon-position="after"
-                        >
-                        {{ $getVisitLinkLabel() }}
-                    </x-filament::link>
-                @endif
-            @else
+            @if($getSlugInputUrlVisitLinkVisible())
+                <x-filament::link
+                        :href="$getRecordUrl()"
+                        target="_blank"
+                        size="sm"
+                        icon="heroicon-m-arrow-top-right-on-square"
+                        icon-position="after"
+                    >
+                    {{ $getVisitLinkLabel() }}
+                </x-filament::link>
+            @endif
+        </div>
+    @else
+        <div
+            x-data="{
+                context: '{{ $getContext() }}', // edit or create
+                state: $wire.entangle('{{ $getStatePath() }}'), // current slug value
+                statePersisted: '', // slug value received from db
+                stateInitial: '', // slug value before modification
+                editing: false,
+                modified: false,
+                initModification: function() {
+                    this.stateInitial = this.state;
+
+                    if(!this.statePersisted) {
+                        this.statePersisted = this.state;
+                    }
+
+                    this.editing = true;
+
+                    setTimeout(() => $refs.slugInput.focus(), 75);
+                },
+                submitModification: function() {
+                    if(!this.stateInitial) {
+                        this.state = '';
+                    }
+                    else {
+                        this.state = this.stateInitial;
+                    }
+
+                    $wire.set('{{ $getStatePath() }}', this.state)
+                    this.detectModification();
+                    this.editing = false;
+               },
+               cancelModification: function() {
+                    this.stateInitial = this.state;
+                    this.detectModification();
+                    this.editing = false;
+               },
+               resetModification: function() {
+                    this.stateInitial = this.statePersisted;
+                    this.detectModification();
+               },
+               detectModification: function() {
+                    this.modified = this.stateInitial !== this.statePersisted;
+               },
+            }"
+            x-on:submit.document="modified = false"
+        >
+            <div
+                {{ $attributes->merge($getExtraAttributes())->class(['flex gap-4 items-center justify-between group text-sm filament-forms-text-input-component']) }}
+            >
                 <span
                      class="
                         @if(!$getState()) flex items-center gap-1 @endif
@@ -135,27 +131,21 @@
                     x-show="editing"
                     style="display: none;"
                 >
-                    {{-- TODO(fila5): verify CSS class names fi-input-wrp / fi-input-wrp-content-ctn against Filament 5 TextInput view --}}
-                    <div class="fi-input-wrp">
-                        <div class="fi-input-wrp-content-ctn">
-                            <input
-                                type="text"
-                                x-ref="slugInput"
-                                x-model="stateInitial"
-                                x-bind:disabled="!editing"
-                                x-on:keydown.enter="submitModification()"
-                                x-on:keydown.escape="cancelModification()"
-                                {!! ($autocomplete = $getAutocomplete()) ? "autocomplete=\"{$autocomplete}\"" : null !!}
-                                id="{{ $getId() }}"
-                                {!! ($placeholder = $getPlaceholder()) ? "placeholder=\"{$placeholder}\"" : null !!}
-                                {!! $isRequired() ? 'required' : null !!}
-                                {{ $getExtraInputAttributeBag()->class([
-                                    'fi-input text-sm font-semibold',
-                                    'border-danger-600 ring-danger-600' => $errors->has($getStatePath())])
-                                }}
-                            />
-                        </div>
-                    </div>
+                    <x-filament::input.wrapper :valid="! $errors->has($getStatePath())">
+                        <x-filament::input
+                            type="text"
+                            x-ref="slugInput"
+                            x-model="stateInitial"
+                            x-bind:disabled="!editing"
+                            x-on:keydown.enter="submitModification()"
+                            x-on:keydown.escape="cancelModification()"
+                            {!! ($autocomplete = $getAutocomplete()) ? "autocomplete=\"{$autocomplete}\"" : null !!}
+                            id="{{ $getId() }}"
+                            {!! ($placeholder = $getPlaceholder()) ? "placeholder=\"{$placeholder}\"" : null !!}
+                            {!! $isRequired() ? 'required' : null !!}
+                            {{ $getExtraInputAttributeBag()->class(['fi-input text-sm font-semibold']) }}
+                        />
+                    </x-filament::input.wrapper>
                 </div>
 
                 <div
@@ -187,11 +177,8 @@
                     />
                 </div>
 
-                <span
-                    x-show="context === 'edit'"
-                    class="flex items-center space-x-2"
-                >
-                    @if($getSlugInputUrlVisitLinkVisible())
+                @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
+                    <span class="flex items-center space-x-2">
                         <template x-if="!editing">
                             <x-filament::link
                                 :href="$getRecordUrl()"
@@ -203,9 +190,9 @@
                                 {{ $getVisitLinkLabel() }}
                             </x-filament::link>
                         </template>
-                    @endif
-            </span>
-            @endif
+                    </span>
+                @endif
+            </div>
         </div>
-    </div>
-</x-filament-forms::field-wrapper>
+    @endif
+</x-dynamic-component>

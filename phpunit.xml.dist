@@ -13,7 +13,7 @@
     beStrictAboutOutputDuringTests="true"
 >
     <testsuites>
-        <testsuite name="Camya Test Suite">
+        <testsuite name="Blendbyte FilamentTitleWithSlug Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
