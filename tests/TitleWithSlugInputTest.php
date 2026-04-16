@@ -206,6 +206,34 @@ describe('URL generation', function () {
         Livewire::test(TestableForm::class)
             ->assertDontSee('*Visit Link*');
     });
+
+    it('shows the default visit label with the model name', function () {
+        config()->set('filament-title-with-slug.url_host', 'https://www.example.com');
+
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(), // no urlVisitLinkLabel
+        ];
+
+        // Default label = "Visit" translation + class basename headline = "Visit Record"
+        Livewire::test(TestableForm::class, [
+            'record' => new Record(['title' => 'Test', 'slug' => 'test']),
+        ])->assertSee('Visit Record');
+    });
+
+    it('shows the visit URL in readonly slug mode', function () {
+        config()->set('filament-title-with-slug.url_host', 'https://www.example.com');
+
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(slugIsReadonly: true),
+        ];
+
+        Livewire::test(TestableForm::class, [
+            'record' => new Record(['title' => 'Test', 'slug' => 'my-slug']),
+        ])
+            ->assertSeeHtml('https://www.example.com')
+            ->assertSeeHtml('my-slug')
+            ->assertDontSeeHtml('initModification');
+    });
 });
 
 // ---------------------------------------------------------------------------
@@ -277,6 +305,16 @@ describe('auto-slug generation', function () {
         Livewire::test(TestableForm::class)
             ->set('data.title', 'Trigger')
             ->assertSet('data.slug', 'callback-ran');
+    });
+
+    it('re-slugifies from title when slug is cleared', function () {
+        TestableForm::$formSchema = [TitleWithSlugInput::make()];
+
+        // User types a title, then manually clears the slug — should regenerate from title
+        Livewire::test(TestableForm::class)
+            ->set('data.title', 'Hello World')
+            ->set('data.slug', '')         // clear the slug
+            ->assertSet('data.slug', 'hello-world');
     });
 
     it('fires the slugAfterStateUpdated callback', function () {
