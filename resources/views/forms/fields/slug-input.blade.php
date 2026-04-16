@@ -11,7 +11,7 @@
                 <span class="fts-slug-value fts-truncate">{{ $getState() }}</span>
             </span>
 
-            @if($getSlugInputUrlVisitLinkVisible())
+            @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
                 <span class="fts-slug-visit">
                     <x-filament::link
                         :href="$getRecordUrl()"

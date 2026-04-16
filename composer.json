@@ -1,6 +1,6 @@
 {
     "name": "blendbyte/filament-title-with-slug",
-    "description": "WordPress-style title & slug input for Filament Forms — auto-generates permalinks with live preview, undo, dark mode & full customization. Maintained for Filament v5.",
+    "description": "Title + slug field for Filament v5 with auto-slug generation, live permalink preview, and inline editing.",
     "keywords": [
         "framework",
         "laravel",
@@ -9,7 +9,6 @@
         "permalink",
         "livewire",
         "alpinejs",
-        "tailwindcss"
     ],
     "homepage": "https://github.com/blendbyte/filament-title-with-slug",
     "license": "MIT",
@@ -50,7 +49,7 @@
         "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
-        "preflight": "vendor/bin/pint && npm run build && vendor/bin/phpstan analyse && vendor/bin/pest",
+        "preflight": "vendor/bin/pint && vendor/bin/phpstan analyse && vendor/bin/pest",
         "format": "vendor/bin/pint"
     },
     "config": {
