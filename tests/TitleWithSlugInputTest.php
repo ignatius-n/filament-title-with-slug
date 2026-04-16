@@ -1,0 +1,297 @@
+<?php
+
+use Blendbyte\FilamentTitleWithSlug\TitleWithSlugInput;
+use Blendbyte\FilamentTitleWithSlug\Tests\Support\Record;
+use Blendbyte\FilamentTitleWithSlug\Tests\Support\TestableForm;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Schemas\Components\Utilities\Set;
+use Illuminate\Support\Str;
+use Livewire\Livewire;
+
+// ---------------------------------------------------------------------------
+// Rendering & display
+// ---------------------------------------------------------------------------
+
+describe('rendering', function () {
+    it('renders without errors', function () {
+        TestableForm::$formSchema = [TitleWithSlugInput::make()];
+
+        Livewire::test(TestableForm::class)->assertOk();
+    });
+
+    it('binds to default field names (title / slug)', function () {
+        TestableForm::$formSchema = [TitleWithSlugInput::make()];
+
+        Livewire::test(TestableForm::class)
+            ->set(['data.title' => 'Persisted Title', 'data.slug' => 'persisted-slug'])
+            ->assertSet('data.title', 'Persisted Title')
+            ->assertSet('data.slug', 'persisted-slug')
+            ->assertSeeHtml('wire:model.live.blur="data.title"')
+            ->assertSeeHtml('id="form.slug"')
+            ->assertSeeHtml('<span class="mr-1">persisted-slug</span>');
+    });
+
+    it('binds to custom field names and renders custom labels', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                fieldTitle: 'TitleFieldName',
+                fieldSlug: 'SlugFieldName',
+                urlVisitLinkLabel: '*Visit Link Label*',
+                titleLabel: '*Title Label*',
+                titlePlaceholder: '*Title Placeholder*',
+                slugLabel: '*Slug Label*',
+            ),
+        ];
+
+        Livewire::test(TestableForm::class, [
+            'record' => new Record(['SlugFieldName' => 'persisted-slug']),
+        ])
+            ->assertSeeHtml('wire:model.live.blur="data.TitleFieldName"')
+            ->assertSeeHtml('id="form.SlugFieldName"')
+            ->assertSee('*Title Label*')
+            ->assertSee('*Slug Label*')
+            ->assertSee('*Visit Link Label*')
+            ->assertSeeHtml('placeholder="*Title Placeholder*"');
+    });
+
+    it('reads default field names from config', function () {
+        config()->set('filament-title-with-slug.field_title', 'name');
+        config()->set('filament-title-with-slug.field_slug', 'handle');
+
+        TestableForm::$formSchema = [TitleWithSlugInput::make()];
+
+        Livewire::test(TestableForm::class)
+            ->set(['data.name' => 'Test', 'data.handle' => 'test'])
+            ->assertSeeHtml('wire:model.live.blur="data.name"')
+            ->assertSeeHtml('id="form.handle"');
+    });
+
+    it('shows the default permalink label prefix', function () {
+        TestableForm::$formSchema = [TitleWithSlugInput::make()];
+
+        Livewire::test(TestableForm::class)
+            ->set(['data.title' => 'Test', 'data.slug' => 'test'])
+            ->assertSeeHtml(trans('filament-title-with-slug::package.permalink_label'));
+    });
+
+    it('shows slug label postfix', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(slugLabelPostfix: '.mysite.com'),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->set(['data.title' => 'Test', 'data.slug' => 'test'])
+            ->assertSeeHtml('.mysite.com');
+    });
+
+    it('renders title as readonly when titleIsReadonly is true', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(titleIsReadonly: true),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->set(['data.title' => 'Readonly Title', 'data.slug' => 'readonly-title'])
+            ->assertSeeHtml('readonly');
+    });
+
+    it('renders slug in static display mode when slugIsReadonly is true', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(slugIsReadonly: true),
+        ];
+
+        $component = Livewire::test(TestableForm::class)
+            ->set(['data.title' => 'Readonly Slug', 'data.slug' => 'readonly-slug']);
+
+        // Readonly mode renders as a static span, not an interactive edit link
+        $component->assertSeeHtml('readonly-slug');
+        // The pencil edit icon / initModification button should not be present
+        $component->assertDontSeeHtml('initModification');
+    });
+
+    it('hides the URL host when urlHostVisible is false', function () {
+        config()->set('filament-title-with-slug.url_host', 'https://www.example.com');
+
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(urlHostVisible: false, urlPath: '/articles/'),
+        ];
+
+        Livewire::test(TestableForm::class, [
+            'record' => new Record(['title' => 'Test', 'slug' => 'test']),
+        ])
+            ->assertDontSeeHtml('https://www.example.com')
+            ->assertSeeHtml('/articles/');
+    });
+});
+
+// ---------------------------------------------------------------------------
+// URL generation & visit link
+// ---------------------------------------------------------------------------
+
+describe('URL generation', function () {
+    it('builds the visit link from host, path, and slug', function () {
+        config()->set('filament-title-with-slug.url_host', 'https://www.camya.com');
+
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(urlPath: '/blog/'),
+        ];
+
+        Livewire::test(TestableForm::class, [
+            'record' => new Record(['title' => 'Persisted Title', 'slug' => 'persisted-slug']),
+        ])->assertSeeHtml('https://www.camya.com/blog/persisted-slug');
+    });
+
+    it('hides the visit link when urlVisitLinkVisible is false', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                urlVisitLinkVisible: false,
+                urlVisitLinkLabel: '*Visit Link Label*',
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->assertDontSee('*Visit Link Label*');
+    });
+
+    it('accepts a custom visit link route from a closure', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                urlPath: '',
+                urlHostVisible: false,
+                urlVisitLinkRoute: fn (?Model $record) => $record?->slug
+                    ? 'https://'.$record->slug.'.camya.com'
+                    : null,
+                slugLabelPostfix: '.camya.com',
+            ),
+        ];
+
+        Livewire::test(TestableForm::class, [
+            'record' => new Record(['title' => 'My Subdomain', 'slug' => 'my-subdomain']),
+        ])
+            ->assertSeeHtml('https://my-subdomain.camya.com')
+            ->assertSeeHtml('>.camya.com<');
+    });
+
+    it('accepts a dynamic visit link label from a closure', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                urlVisitLinkLabel: fn () => '*Dynamic Label*',
+            ),
+        ];
+
+        Livewire::test(TestableForm::class, [
+            'record' => new Record(['title' => 'Test', 'slug' => 'test']),
+        ])->assertSee('*Dynamic Label*');
+    });
+
+    it('renders a URL when slug has no required rule and value is a path separator', function () {
+        config()->set('filament-title-with-slug.url_host', 'https://www.camya.com');
+
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(slugRules: []),
+        ];
+
+        Livewire::test(TestableForm::class, [
+            'record' => new Record(['title' => 'My Homepage', 'slug' => '/']),
+        ])->assertSeeHtml("!editing ? 'https://www.camya.com/' : '/'");
+    });
+
+    it('does not render a visit link when no record exists', function () {
+        config()->set('filament-title-with-slug.url_host', 'https://www.example.com');
+
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(urlVisitLinkLabel: '*Visit Link*'),
+        ];
+
+        // No record passed — create context, no persisted URL to link to
+        Livewire::test(TestableForm::class)
+            ->assertDontSee('*Visit Link*');
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Auto-slug generation
+// ---------------------------------------------------------------------------
+
+describe('auto-slug generation', function () {
+    it('auto-generates slug from title in create context', function () {
+        TestableForm::$formSchema = [TitleWithSlugInput::make()];
+
+        Livewire::test(TestableForm::class)
+            ->set('data.title', 'Hello World')
+            ->assertSet('data.slug', 'hello-world');
+    });
+
+    it('handles multi-word and special character titles', function () {
+        TestableForm::$formSchema = [TitleWithSlugInput::make()];
+
+        Livewire::test(TestableForm::class)
+            ->set('data.title', 'The Quick Brown Fox & Friends!')
+            ->assertSet('data.slug', 'the-quick-brown-fox-friends');
+    });
+
+    it('does not auto-update slug when editing an existing record', function () {
+        TestableForm::$formSchema = [TitleWithSlugInput::make()];
+
+        // Existing record means edit context — slug must stay unchanged
+        Livewire::test(TestableForm::class, [
+            'record' => new Record(['title' => 'Original Title', 'slug' => 'original-slug']),
+        ])
+            ->set('data.title', 'Updated Title')
+            ->assertSet('data.slug', 'original-slug');
+    });
+
+    it('does not overwrite slug when it was manually edited (slug_auto_update_disabled)', function () {
+        TestableForm::$formSchema = [TitleWithSlugInput::make()];
+
+        // Simulates the user having manually edited the slug field:
+        // the slug's afterStateUpdated sets slug_auto_update_disabled = true
+        Livewire::test(TestableForm::class)
+            ->set('data.slug', 'my-custom-slug')  // manual slug edit
+            ->set('data.title', 'Some New Title')  // title change should not overwrite
+            ->assertSet('data.slug', 'my-custom-slug');
+    });
+
+    it('applies a custom slugifier closure', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                slugSlugifier: fn (string $value) => strtoupper(Str::slug($value)),
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->set('data.title', 'hello world')
+            ->assertSet('data.slug', 'HELLO-WORLD');
+    });
+
+    it('fires the titleAfterStateUpdated callback', function () {
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                // Use the callback to overwrite the slug with a sentinel value
+                // so we can confirm the callback executed
+                titleAfterStateUpdated: function (Set $set) {
+                    $set('slug', 'callback-ran');
+                },
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->set('data.title', 'Trigger')
+            ->assertSet('data.slug', 'callback-ran');
+    });
+
+    it('fires the slugAfterStateUpdated callback', function () {
+        $sentinel = 'sentinel-'.uniqid();
+
+        TestableForm::$formSchema = [
+            TitleWithSlugInput::make(
+                slugAfterStateUpdated: function (Set $set) use ($sentinel) {
+                    $set('slug', $sentinel);
+                },
+            ),
+        ];
+
+        Livewire::test(TestableForm::class)
+            ->set('data.slug', 'any-value')
+            ->assertSet('data.slug', $sentinel);
+    });
+});
