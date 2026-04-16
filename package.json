@@ -1,15 +1,12 @@
 {
   "private": true,
-  "description": "WordPress-style title & slug input for Filament Forms — auto-generates permalinks with live preview, undo, dark mode & full customization.",
   "scripts": {
-    "dev": "npx @tailwindcss/cli -i ./resources/css/filament-title-with-slug.css -o ./resources/dist/filament-title-with-slug.css --postcss --watch",
-    "build": "npx @tailwindcss/cli -i ./resources/css/filament-title-with-slug.css -o ./resources/dist/filament-title-with-slug.css --postcss --minify"
+    "dev": "npx @tailwindcss/cli -i ./resources/css/filament-title-with-slug.css -o ./resources/dist/filament-title-with-slug.css --watch",
+    "build": "npx @tailwindcss/cli -i ./resources/css/filament-title-with-slug.css -o ./resources/dist/filament-title-with-slug.css --minify"
   },
   "author": "Andreas Scheibel",
   "license": "MIT",
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.2",
-    "postcss": "^8.5.10",
     "tailwindcss": "^4.2.2"
   }
 }
