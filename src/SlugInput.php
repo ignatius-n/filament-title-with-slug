@@ -8,9 +8,6 @@ use Illuminate\Support\Str;
 
 class SlugInput extends TextInput
 {
-    /** @var view-string */
-    protected string $view = 'filament-title-with-slug::forms.fields.slug-input';
-
     protected string|Closure|null $context = null;
 
     protected string|Closure $basePath = '/';
@@ -205,5 +202,10 @@ class SlugInput extends TextInput
     public function getBasePath(): string
     {
         return $this->evaluate($this->basePath);
+    }
+
+    public function getView(): string
+    {
+        return 'filament-title-with-slug::forms.fields.slug-input';
     }
 }
