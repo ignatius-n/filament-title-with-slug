@@ -157,8 +157,8 @@ class SlugInput extends TextInput
         $visitLinkRoute = $this->getVisitLinkRoute();
 
         return $visitLinkRoute
-            ? $this->getVisitLinkRoute()
-            : $this->getFullBaseUrl().$this->evaluate($this->recordSlug);
+            ? $visitLinkRoute
+            : $this->getFullBaseUrl().$this->getRecordSlug();
     }
 
     public function slugInputBasePath(string|Closure|null $path): static
