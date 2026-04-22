@@ -1,0 +1,49 @@
+name: Feature Request
+description: Suggest a new feature or enhancement for the package.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening a feature request, please check existing issues and discussions to see if it has already been proposed.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Use Case
+      description: What problem does this solve? Describe the context and why the current behavior is limiting.
+      placeholder: "e.g. I can't currently configure the slug separator, which is a problem when..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe what you'd like to see. Include a rough API sketch if you have one.
+      render: php
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any workarounds you've tried, or other approaches you considered.
+
+  - type: dropdown
+    id: pr
+    attributes:
+      label: Would you be willing to submit a PR?
+      options:
+        - "Yes"
+        - "Yes, with guidance"
+        - "No"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Links, screenshots, or anything else relevant.
