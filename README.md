@@ -23,13 +23,15 @@ TitleWithSlugInput::make()
 
 ## Requirements
 
-| Package (blendbyte) | Filament | PHP | Laravel | Namespace |
-|---|---|---|---|---|
-| `^3.x` | `^5.0` | `^8.2` – `^8.5` | `^11` / `^12` / `^13`* | `Blendbyte\FilamentTitleWithSlug` |
-| `^2.x` | `^4.0` | `^8.2` | `^11` / `^12` | `Camya\Filament\Forms\Components` |
-| `^1.x` | `^3.0` | `^8.1` | `^10` / `^11` / `^12` | `Camya\Filament\Forms\Components` |
+| Package (blendbyte) | Filament | Laravel | Namespace |
+|---|---|---|---|
+| `^3.x` | `^5.0` | `^11` / `^12` / `^13`* | `Blendbyte\FilamentTitleWithSlug` |
+| `^2.x` ⚠️ _(deprecated)_ | `^4.0` | `^11` / `^12` | `Camya\Filament\Forms\Components` |
+| `^1.x` ⚠️ _(deprecated)_ | `^3.0` | `^10` / `^11` / `^12` | `Camya\Filament\Forms\Components` |
 
 > *PHP 8.2 is not tested against Laravel 13.
+
+> **v1.x and v2.x are not actively maintained.** They receive security and severe bug fixes only — no new features. Please upgrade to v3.x. See the [Upgrading](#upgrading) section for migration steps.
 
 Looking for Filament v2 support? The original package is at [camya/filament-title-with-slug](https://github.com/camya/filament-title-with-slug).
 
