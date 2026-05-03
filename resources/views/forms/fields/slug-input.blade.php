@@ -1,3 +1,9 @@
+<style>
+    .fts-slug-row { container-type: inline-size; }
+    @container (max-width: 700px) {
+        .fts-slug-label, .fts-slug-base-url { display: none; }
+    }
+</style>
 <x-dynamic-component
     :component="$getFieldWrapperView()"
     :field="$field"
