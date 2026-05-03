@@ -4,7 +4,7 @@
     class="filament-seo-slug-input-wrapper"
 >
     @if($getSlugReadOnly())
-        <div class="fi-input-wrp fts-slug-row">
+        <div class="fi-input-wrp fts-slug-row" style="container-type:inline-size;">
             <span class="fts-slug-meta fts-slug-meta--flex1" style="display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0.5rem;">
                 <span class="fts-slug-meta-inner" style="display:flex;align-items:center;gap:0.25rem;min-width:0;overflow:hidden;white-space:nowrap;">
                     <span class="fts-slug-label">{{ $getLabelPrefix() }}</span>
@@ -74,7 +74,7 @@
             }"
             x-on:submit.document="modified = false"
         >
-            <div class="fi-input-wrp fts-slug-row">
+            <div class="fi-input-wrp fts-slug-row" style="container-type:inline-size;">
                 <span class="fts-slug-meta" :style="editing ? 'flex:0 1 auto;' : 'display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0.5rem;'">
                     <span class="fts-slug-meta-inner" style="display:flex;align-items:center;gap:0.25rem;min-width:0;overflow:hidden;white-space:nowrap;">
                         <span class="fts-slug-label">{{ $getLabelPrefix() }}</span>
