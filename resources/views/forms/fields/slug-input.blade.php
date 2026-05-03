@@ -9,21 +9,21 @@
                 <span>{{ $getLabelPrefix() }}</span>
                 <span>{{ $getFullBaseUrl() }}</span>
                 <span class="fts-slug-value fts-truncate" style="flex: 1; min-width: 0;">{{ $getState() }}</span>
-            </span>
 
-            @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
-                <span class="fts-slug-visit" style="flex: 0 1 auto; margin-left: auto; min-width: 0; overflow: hidden;">
-                    <x-filament::link
-                        :href="$getRecordUrl()"
-                        target="_blank"
-                        size="sm"
-                        icon="heroicon-m-arrow-top-right-on-square"
-                        icon-position="after"
-                    >
-                        {{ $getVisitLinkLabel() }}
-                    </x-filament::link>
-                </span>
-            @endif
+                @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
+                    <span class="fts-slug-visit" style="flex-shrink: 0; margin-left: auto;">
+                        <x-filament::link
+                            :href="$getRecordUrl()"
+                            target="_blank"
+                            size="sm"
+                            icon="heroicon-m-arrow-top-right-on-square"
+                            icon-position="after"
+                        >
+                            {{ $getVisitLinkLabel() }}
+                        </x-filament::link>
+                    </span>
+                @endif
+            </span>
         </div>
     @else
         <div
@@ -104,6 +104,22 @@
                     @endif
 
                     <span x-show="!editing && context !== 'create' && modified"> [{{ trans('filament-title-with-slug::package.permalink_status_changed') }}]</span>
+
+                    @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
+                        <span class="fts-slug-visit" x-show="!editing" style="flex-shrink: 0; margin-left: auto;">
+                            <template x-if="!editing">
+                                <x-filament::link
+                                    :href="$getRecordUrl()"
+                                    target="_blank"
+                                    size="sm"
+                                    icon="heroicon-m-arrow-top-right-on-square"
+                                    icon-position="after"
+                                >
+                                    {{ $getVisitLinkLabel() }}
+                                </x-filament::link>
+                            </template>
+                        </span>
+                    @endif
                 </span>
 
                 <div class="fts-slug-input-wrapper" x-show="editing" style="display: none;">
@@ -147,22 +163,6 @@
                         :tooltip="trans('filament-title-with-slug::package.permalink_action_cancel')"
                     />
                 </div>
-
-                @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
-                    <span class="fts-slug-visit" x-show="!editing" style="flex: 0 1 auto; margin-left: auto; min-width: 0; overflow: hidden;">
-                        <template x-if="!editing">
-                            <x-filament::link
-                                :href="$getRecordUrl()"
-                                target="_blank"
-                                size="sm"
-                                icon="heroicon-m-arrow-top-right-on-square"
-                                icon-position="after"
-                            >
-                                {{ $getVisitLinkLabel() }}
-                            </x-filament::link>
-                        </template>
-                    </span>
-                @endif
             </div>
         </div>
     @endif
