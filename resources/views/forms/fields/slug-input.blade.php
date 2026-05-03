@@ -7,8 +7,8 @@
         <div class="fi-input-wrp fts-slug-row">
             <span class="fts-slug-meta fts-slug-meta--flex1" style="display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0.5rem;">
                 <span class="fts-slug-meta-inner" style="display:flex;align-items:center;gap:0.25rem;min-width:0;overflow:hidden;white-space:nowrap;">
-                    <span>{{ $getLabelPrefix() }}</span>
-                    <span>{{ $getFullBaseUrl() }}</span>
+                    <span class="fts-slug-label">{{ $getLabelPrefix() }}</span>
+                    <span class="fts-slug-base-url">{{ $getFullBaseUrl() }}</span>
                     <span class="fts-slug-value fts-truncate">{{ $getState() }}</span>
                 </span>
 
@@ -77,9 +77,9 @@
             <div class="fi-input-wrp fts-slug-row">
                 <span class="fts-slug-meta" :style="editing ? 'flex:0 1 auto;' : 'display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0.5rem;'">
                     <span class="fts-slug-meta-inner" style="display:flex;align-items:center;gap:0.25rem;min-width:0;overflow:hidden;white-space:nowrap;">
-                        <span>{{ $getLabelPrefix() }}</span>
+                        <span class="fts-slug-label">{{ $getLabelPrefix() }}</span>
 
-                        <span x-text="!editing ? '{{ $getFullBaseUrl() }}' : '{{ $getBasePath() }}'"></span>
+                        <span class="fts-slug-base-url" x-text="!editing ? '{{ $getFullBaseUrl() }}' : '{{ $getBasePath() }}'"></span>
 
                         <a
                             href="#"
