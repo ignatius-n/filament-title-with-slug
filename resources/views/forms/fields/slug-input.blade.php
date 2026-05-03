@@ -1,18 +1,12 @@
-<style>
-    .fts-slug-row { container-type: inline-size; }
-    @container (max-width: 700px) {
-        .fts-slug-label, .fts-slug-base-url { display: none; }
-    }
-</style>
 <x-dynamic-component
     :component="$getFieldWrapperView()"
     :field="$field"
     class="filament-seo-slug-input-wrapper"
 >
     @if($getSlugReadOnly())
-        <div class="fi-input-wrp fts-slug-row" style="container-type:inline-size;">
-            <span class="fts-slug-meta fts-slug-meta--flex1" style="display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0.5rem;">
-                <span class="fts-slug-meta-inner" style="display:flex;align-items:center;gap:0.25rem;min-width:0;overflow:hidden;white-space:nowrap;">
+        <div class="fi-input-wrp fts-slug-row">
+            <span class="fts-slug-meta">
+                <span class="fts-slug-meta-inner">
                     <span class="fts-slug-label">{{ $getLabelPrefix() }}</span>
                     <span class="fts-slug-base-url">{{ $getFullBaseUrl() }}</span>
                     <span class="fts-slug-value fts-truncate">{{ $getState() }}</span>
@@ -27,7 +21,7 @@
                             icon="heroicon-m-arrow-top-right-on-square"
                             icon-position="after"
                         >
-                            {{ $getVisitLinkLabel() }}
+                            <span class="fts-slug-visit-label">{{ $getVisitLinkLabel() }}</span>
                         </x-filament::link>
                     </span>
                 @endif
@@ -80,9 +74,9 @@
             }"
             x-on:submit.document="modified = false"
         >
-            <div class="fi-input-wrp fts-slug-row" style="container-type:inline-size;">
-                <span class="fts-slug-meta" :style="editing ? 'flex:0 1 auto;' : 'display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0.5rem;'">
-                    <span class="fts-slug-meta-inner" style="display:flex;align-items:center;gap:0.25rem;min-width:0;overflow:hidden;white-space:nowrap;">
+            <div class="fi-input-wrp fts-slug-row">
+                <span class="fts-slug-meta" x-show="!editing">
+                    <span class="fts-slug-meta-inner">
                         <span class="fts-slug-label">{{ $getLabelPrefix() }}</span>
 
                         <span class="fts-slug-base-url" x-text="!editing ? '{{ $getFullBaseUrl() }}' : '{{ $getBasePath() }}'"></span>
@@ -95,9 +89,8 @@
                             x-show="!editing"
                             class="fts-slug-edit-link"
                             :class="context !== 'create' && modified ? 'fts-slug-edit-link--modified' : ''"
-                            style="display:flex;flex:1;min-width:0;overflow:hidden;"
                         >
-                            <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;">{{ $getState() }}</span>
+                            <span>{{ $getState() }}</span>
 
                             <x-heroicon-m-pencil-square
                                 stroke-width="2"
@@ -125,7 +118,7 @@
                                     icon="heroicon-m-arrow-top-right-on-square"
                                     icon-position="after"
                                 >
-                                    {{ $getVisitLinkLabel() }}
+                                    <span class="fts-slug-visit-label">{{ $getVisitLinkLabel() }}</span>
                                 </x-filament::link>
                             </template>
                         </span>
