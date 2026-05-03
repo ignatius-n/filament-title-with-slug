@@ -12,7 +12,7 @@
             </span>
 
             @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
-                <span class="fts-slug-visit" style="margin-left: auto; flex-shrink: 0;">
+                <span class="fts-slug-visit" style="flex: none; margin-left: auto;">
                     <x-filament::link
                         :href="$getRecordUrl()"
                         target="_blank"
@@ -149,7 +149,7 @@
                 </div>
 
                 @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
-                    <span class="fts-slug-visit" x-show="!editing" style="margin-left: auto; flex-shrink: 0;">
+                    <span class="fts-slug-visit" x-show="!editing" style="flex: none; margin-left: auto;">
                         <template x-if="!editing">
                             <x-filament::link
                                 :href="$getRecordUrl()"
