@@ -73,7 +73,7 @@
             x-on:submit.document="modified = false"
         >
             <div class="fi-input-wrp fts-slug-row">
-                <span class="fts-slug-meta" :style="editing ? 'flex: 0 1 auto;' : 'flex: 1; min-width: 0; overflow: hidden; white-space: nowrap;'">
+                <span class="fts-slug-meta" :style="editing ? 'flex: 0 1 auto; overflow: visible; white-space: normal;' : ''">
                     <span>{{ $getLabelPrefix() }}</span>
 
                     <span x-text="!editing ? '{{ $getFullBaseUrl() }}' : '{{ $getBasePath() }}'"></span>
