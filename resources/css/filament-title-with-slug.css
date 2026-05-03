@@ -16,6 +16,14 @@
     line-height: 1.5rem;
     font-size: 0.875rem;
     overflow: hidden;
+    container-type: inline-size;
+}
+
+@container (max-width: 400px) {
+    .fts-slug-label,
+    .fts-slug-base-url {
+        display: none;
+    }
 }
 
 /* ---------------------------------------------------------------------------
