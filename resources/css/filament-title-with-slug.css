@@ -10,10 +10,12 @@
 .fts-slug-row {
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
     gap: 0.5rem;
     padding: 0.375rem 0.75rem;
     line-height: 1.5rem;
     font-size: 0.875rem;
+    overflow: hidden;
 }
 
 /* ---------------------------------------------------------------------------
@@ -22,7 +24,10 @@
 .fts-slug-meta {
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
     gap: 0.25rem;
+    overflow: hidden;
+    white-space: nowrap;
     color: rgb(107, 114, 128);
 }
 
@@ -59,10 +64,20 @@
     align-items: center;
     justify-content: center;
     gap: 0.25rem;
+    min-width: 0;
+    overflow: hidden;
     cursor: pointer;
     font-weight: 600;
     color: rgb(9, 9, 11);
     text-decoration: none;
+}
+
+/* Slug text inside the edit link — truncates, never wraps */
+.fts-slug-edit-link > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
 }
 
 .fts-slug-edit-link:hover {
