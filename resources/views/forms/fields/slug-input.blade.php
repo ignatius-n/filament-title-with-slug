@@ -8,11 +8,11 @@
             <span class="fts-slug-meta fts-slug-meta--flex1">
                 <span>{{ $getLabelPrefix() }}</span>
                 <span>{{ $getFullBaseUrl() }}</span>
-                <span class="fts-slug-value fts-truncate">{{ $getState() }}</span>
+                <span class="fts-slug-value fts-truncate" style="flex: 1; min-width: 0;">{{ $getState() }}</span>
             </span>
 
             @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
-                <span class="fts-slug-visit">
+                <span class="fts-slug-visit" style="margin-left: auto; flex-shrink: 0;">
                     <x-filament::link
                         :href="$getRecordUrl()"
                         target="_blank"
@@ -73,7 +73,7 @@
             x-on:submit.document="modified = false"
         >
             <div class="fi-input-wrp fts-slug-row">
-                <span class="fts-slug-meta" :style="editing ? 'flex: 0 1 auto;' : 'flex: 1; min-width: 0;'">
+                <span class="fts-slug-meta" :style="editing ? 'flex: 0 1 auto;' : 'flex: 1; min-width: 0; overflow: hidden; white-space: nowrap;'">
                     <span>{{ $getLabelPrefix() }}</span>
 
                     <span x-text="!editing ? '{{ $getFullBaseUrl() }}' : '{{ $getBasePath() }}'"></span>
@@ -86,8 +86,9 @@
                         x-show="!editing"
                         class="fts-slug-edit-link"
                         :class="context !== 'create' && modified ? 'fts-slug-edit-link--modified' : ''"
+                        style="flex: 1; min-width: 0; overflow: hidden; display: flex;"
                     >
-                        <span>{{ $getState() }}</span>
+                        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;">{{ $getState() }}</span>
 
                         <x-heroicon-m-pencil-square
                             stroke-width="2"
@@ -148,7 +149,7 @@
                 </div>
 
                 @if($getSlugInputUrlVisitLinkVisible() && $getRecordUrl())
-                    <span class="fts-slug-visit" x-show="!editing">
+                    <span class="fts-slug-visit" x-show="!editing" style="margin-left: auto; flex-shrink: 0;">
                         <template x-if="!editing">
                             <x-filament::link
                                 :href="$getRecordUrl()"
