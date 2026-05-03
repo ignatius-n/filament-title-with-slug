@@ -27,9 +27,7 @@
     flex-wrap: nowrap;
     flex: 1;
     min-width: 0;
-    gap: 0.25rem;
-    overflow: hidden;
-    white-space: nowrap;
+    gap: 0.5rem;
     color: rgb(107, 114, 128);
 }
 
@@ -40,6 +38,17 @@
 .fts-slug-meta--flex1 {
     flex: 1;
     min-width: 0;
+}
+
+/* Inner wrapper: grows to fill all space that isn't the visit link, clips when narrow */
+.fts-slug-meta-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 /* Slug value in readonly mode */
@@ -162,7 +171,6 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    margin-left: auto;
 }
 
 /* ---------------------------------------------------------------------------
